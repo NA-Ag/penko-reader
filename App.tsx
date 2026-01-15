@@ -15,7 +15,7 @@ const App: React.FC = () => {
   const [fontSize, setFontSize] = useState(64);
   const [language, setLanguage] = useState<LanguageCode>('en');
   const [contentLanguage, setContentLanguage] = useState<LanguageCode>('en');
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
   const [showFullText, setShowFullText] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [dyslexicMode, setDyslexicMode] = useState(false);
@@ -251,7 +251,7 @@ const App: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <img src="/penguin-logo.svg" alt="Penko" className="w-8 h-8" />
+          <img src="penguin-logo.svg" alt="Penko" className="w-8 h-8" />
           <h1 className="text-3xl font-bold tracking-tight text-slate-800 dark:text-white">Penko Reader</h1>
         </div>
 
@@ -444,6 +444,10 @@ const App: React.FC = () => {
       </div>
     </div>
   );
+};
+
+export default App;
+
 };
 
 export default App;
