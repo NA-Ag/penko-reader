@@ -5,7 +5,7 @@
   "main": "electron/main.js",
   "description": "An accessibility-focused offline reading tool.",
   "author": "Penko Software",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -50,3 +50,4 @@
     }
   }
 }
+
