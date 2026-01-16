@@ -18,7 +18,7 @@ export default defineConfig(({ command, mode }) => {
         react(),
         VitePWA({
           registerType: 'autoUpdate',
-          includeAssets: ['penguin-logo.svg', 'dicts/*.bin'],
+          includeAssets: ['penguin-reader-logo.svg', 'dicts/*.bin'],
           manifest: {
             name: 'Penko Reader',
             short_name: 'PenkoReader',
@@ -26,8 +26,13 @@ export default defineConfig(({ command, mode }) => {
             theme_color: '#ffffff',
             icons: [
               {
-                src: 'penguin-logo.svg',
+                src: 'penguin-reader-logo.svg',
                 sizes: '192x192',
+                type: 'image/svg+xml'
+              },
+              {
+                src: 'penguin-reader-logo.svg',
+                sizes: '512x512',
                 type: 'image/svg+xml'
               }
             ]
