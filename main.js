@@ -12,12 +12,12 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     },
-    icon: path.join(__dirname, '../public/penguin-logo.svg')
+    icon: path.join(__dirname, 'dist/penguin-logo.svg')
   });
 
   // In production, load the built index.html
   // In dev, you might load localhost:3000, but for this build script we assume production
-  win.loadFile(path.join(__dirname, '../dist/index.html'));
+  win.loadFile(path.join(__dirname, 'dist/index.html'));
   
   // Remove menu bar for cleaner look
   win.setMenuBarVisibility(false);
