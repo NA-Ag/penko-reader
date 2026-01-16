@@ -39,7 +39,7 @@
       "electron/**/*"
     ],
     "linux": {
-      "target": ["AppImage", "deb"],
+      "target": ["AppImage", "deb", "rpm"],
       "category": "Education"
     },
     "win": {
@@ -50,4 +50,3 @@
     }
   }
 }
-
