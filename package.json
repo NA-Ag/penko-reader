@@ -1,7 +1,6 @@
 {
   "name": "penko-reader",
   "private": true,
-  "homepage": "./",
   "main": "main.js",
   "repository": "github:NA-Ag/penko-reader",
   "description": "An accessibility-focused offline reading tool.",
@@ -12,7 +11,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "electron:build": "vite build && electron-builder"
+    "electron:build": "vite build --base ./ && electron-builder"
   },
   "dependencies": {
     "react": "^19.2.3",
@@ -55,4 +54,3 @@
     }
   }
 }
-
