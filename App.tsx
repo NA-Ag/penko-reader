@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+
+    import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { WordToken, ReaderStatus, LanguageCode, Theme } from './types';
 import { TRANSLATIONS } from './utils/translations';
 import Controls from './components/Controls';
@@ -6,6 +7,7 @@ import OrpDisplay from './components/OrpDisplay';
 import ReaderInput from './components/ReaderInput';
 import FullTextDisplay from './components/FullTextDisplay';
 import Modal from './components/Modal';
+import logo from './penguin-logo.svg';
 
 const App: React.FC = () => {
   const [tokens, setTokens] = useState<WordToken[]>([]);
@@ -251,7 +253,7 @@ const App: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <img src="penguin-logo.svg" alt="Penko" className="w-8 h-8" />
+          <img src={logo} alt="Penko" className="w-8 h-8" />
           <h1 className="text-3xl font-bold tracking-tight text-slate-800 dark:text-white">Penko Reader</h1>
         </div>
 
@@ -447,3 +449,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
