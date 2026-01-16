@@ -6,6 +6,7 @@ import OrpDisplay from './components/OrpDisplay';
 import ReaderInput from './components/ReaderInput';
 import FullTextDisplay from './components/FullTextDisplay';
 import Modal from './components/Modal';
+import { InstallModal } from './components/InstallModal';
 import logo from './penguin-logo.svg';
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
   const [installPrompt, setInstallPrompt] = useState<any>(null);
   const [focusMode, setFocusMode] = useState(false);
   const [modal, setModal] = useState({ isOpen: false, title: '', message: '' });
+  const [isInstallModalOpen, setInstallModalOpen] = useState(false);
 
   const timerRef = useRef<number | null>(null);
 
@@ -139,19 +141,12 @@ const App: React.FC = () => {
       });
     } else {
       // Fallback for iOS or if prompt is not available
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-      if (isIOS) {
-        setModal({ isOpen: true, title: 'Install on iOS', message: "1. Tap the Share button\n2. Scroll down and tap 'Add to Home Screen'" });
-      } else {
-        setModal({ isOpen: true, title: 'Install App', message: "Look for the 'Install' icon in your browser's address bar, or select 'Install Penko Reader' from the browser menu." });
-      }
+      setInstallModalOpen(true);
     }
   };
 
   const handleDownload = () => {
-    // Update this URL to your actual GitHub Releases page
-    const repoUrl = 'https://github.com/NA-Ag/penko-reader/releases';
-    window.open(repoUrl, '_blank');
+    setInstallModalOpen(true);
   };
 
   // Smart Tokenizer that handles CJK (Chinese/Japanese/Korean) correctly
@@ -252,6 +247,7 @@ const App: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
+          <img src="penguin-logo.svg" alt="Penko" className="w-8 h-8" />
           <img src={logo} alt="Penko" className="w-8 h-8" />
           <h1 className="text-3xl font-bold tracking-tight text-slate-800 dark:text-white">Penko Reader</h1>
         </div>
@@ -441,6 +437,12 @@ const App: React.FC = () => {
           title={modal.title} 
           message={modal.message} 
           onClose={() => setModal({ ...modal, isOpen: false })} 
+        />
+
+        <InstallModal 
+          isOpen={isInstallModalOpen} 
+          onClose={() => setInstallModalOpen(false)} 
+          t={t} 
         />
       </div>
     </div>
