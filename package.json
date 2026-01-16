@@ -11,7 +11,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "electron:build": "vite build --base ./ && electron-builder"
+    "electron:build": "vite build --base ./ && electron-builder",
+    "electron:publish": "vite build --base ./ && electron-builder --publish always"
   },
   "dependencies": {
     "react": "^19.2.3",
