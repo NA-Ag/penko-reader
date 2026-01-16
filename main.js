@@ -12,7 +12,7 @@ function createWindow() {
       nodeIntegration: true,
       contextIsolation: false
     },
-    icon: path.join(__dirname, 'dist/penguin-logo.svg')
+    icon: path.join(__dirname, 'dist/penguin-reader-logo.svg')
   });
 
   // In production, load the built index.html
