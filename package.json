@@ -2,7 +2,7 @@
   "name": "penko-reader",
   "private": true,
   "homepage": "./",
-  "main": "electron/main.js",
+  "main": "main.js",
   "description": "An accessibility-focused offline reading tool.",
   "author": "Penko Software",
   "version": "1.0.0",
@@ -36,7 +36,7 @@
     },
     "files": [
       "dist/**/*",
-      "electron/**/*"
+      "main.js"
     ],
     "linux": {
       "target": ["AppImage", "deb", "rpm"],
