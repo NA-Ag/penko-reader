@@ -9,7 +9,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      base: command === 'build' ? './' : '/',
+      base: '/',
       server: {
         port: 3000,
         host: '0.0.0.0',
@@ -24,18 +24,31 @@ export default defineConfig(({ command, mode }) => {
             short_name: 'PenkoReader',
             description: 'Accessibility-focused offline reading tool',
             theme_color: '#ffffff',
+            background_color: '#ffffff',
+            display: 'standalone',
+            start_url: '/',
+            scope: '/',
+            orientation: 'any',
             icons: [
               {
                 src: 'penguin-reader-logo.svg',
                 sizes: '192x192',
-                type: 'image/svg+xml'
+                type: 'image/svg+xml',
+                purpose: 'any maskable'
               },
               {
                 src: 'penguin-reader-logo.svg',
                 sizes: '512x512',
-                type: 'image/svg+xml'
+                type: 'image/svg+xml',
+                purpose: 'any maskable'
               }
             ]
+          },
+          workbox: {
+            globPatterns: ['**/*.{js,css,html,ico,png,svg,bin}'],
+            navigateFallback: '/index.html',
+            // Increase cache limit to 10MB to ensure dictionaries are cached
+            maximumFileSizeToCacheInBytes: 10 * 1024 * 1024
           }
         })
       ],
