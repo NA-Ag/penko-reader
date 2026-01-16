@@ -1,5 +1,4 @@
-
-    import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { WordToken, ReaderStatus, LanguageCode, Theme } from './types';
 import { TRANSLATIONS } from './utils/translations';
 import Controls from './components/Controls';
@@ -449,4 +448,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
