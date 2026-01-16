@@ -32,7 +32,10 @@
   "build": {
     "appId": "org.penkosoftware.reader",
     "productName": "Penko Reader",
-    "publish": ["github"],
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    },
     "directories": {
       "output": "dist-electron"
     },
