@@ -3,8 +3,9 @@
   "private": true,
   "homepage": "./",
   "main": "main.js",
+  "repository": "github:NA-Ag/penko-reader",
   "description": "An accessibility-focused offline reading tool.",
-  "author": "Penko Software",
+  "author": "Penko Software <support@penkosoftware.org>",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -31,6 +32,7 @@
   "build": {
     "appId": "org.penkosoftware.reader",
     "productName": "Penko Reader",
+    "publish": ["github"],
     "directories": {
       "output": "dist-electron"
     },
