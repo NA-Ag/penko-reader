@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Translation } from '../types';
+import logo from '../penguin-reader-logo.svg';
 
 interface InstallModalProps {
   isOpen: boolean;
@@ -9,31 +10,27 @@ interface InstallModalProps {
 
 export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }) => {
   const [platform, setPlatform] = useState<'desktop' | 'ios' | 'android'>('desktop');
-  const [detectedPlatform, setDetectedPlatform] = useState<'desktop' | 'ios' | 'android'>('desktop');
-  const [browser, setBrowser] = useState<'chrome' | 'firefox' | 'samsung' | 'safari' | 'generic'>('generic');
+  const [browser, setBrowser] = useState<'chrome' | 'firefox' | 'samsung'>('chrome');
 
   useEffect(() => {
-    const ua = navigator.userAgent.toLowerCase();
-    let p: 'desktop' | 'ios' | 'android' = 'desktop';
-    if (/iphone|ipad|ipod/.test(ua)) {
-      p = 'ios';
-    } else if (/android/.test(ua)) {
-      p = 'android';
-    }
-    setPlatform(p);
-    setDetectedPlatform(p);
+    if (isOpen) {
+      // Initial guess, but user can change it via dropdowns
+      const ua = navigator.userAgent.toLowerCase();
+      if (/iphone|ipad|ipod/.test(ua)) {
+        setPlatform('ios');
+      } else if (/android/.test(ua)) {
+        setPlatform('android');
+      } else {
+        setPlatform('desktop');
+      }
 
-    // Browser detection
-    if (ua.includes('samsungbrowser')) {
-      setBrowser('samsung');
-    } else if (ua.includes('firefox') || ua.includes('fxios')) {
-      setBrowser('firefox');
-    } else if (ua.includes('chrome') || ua.includes('crios')) {
-      setBrowser('chrome');
-    } else if (ua.includes('safari')) {
-      setBrowser('safari');
-    } else {
-      setBrowser('generic');
+      if (ua.includes('samsungbrowser')) {
+        setBrowser('samsung');
+      } else if (ua.includes('firefox') || ua.includes('fxios')) {
+        setBrowser('firefox');
+      } else {
+        setBrowser('chrome');
+      }
     }
   }, [isOpen]);
 
@@ -84,11 +81,41 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
           ×
         </button>
 
-        <img src="/penguin-reader-logo.svg" alt="Penko Reader" style={{ width: '64px', height: '64px', marginBottom: '1rem' }} />
+        <img src={logo} alt="Penko Reader" style={{ width: '64px', height: '64px', marginBottom: '1rem' }} />
 
         <h2 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.5rem' }}>
-          {platform === 'desktop' ? t.download : (t.installModalTitle || t.installPwa)}
+          {t.installModalTitle || t.installPwa}
         </h2>
+
+        <div className="w-full mb-4 flex flex-col gap-3">
+           <div className="flex flex-col text-left">
+             <label className="text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Device</label>
+             <select 
+               value={platform} 
+               onChange={(e) => setPlatform(e.target.value as any)}
+               className="p-2 border-2 border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-slate-800 dark:text-white"
+             >
+               <option value="desktop">Desktop / Laptop</option>
+               <option value="android">Android</option>
+               <option value="ios">iOS</option>
+             </select>
+           </div>
+           
+           {platform === 'android' && (
+             <div className="flex flex-col text-left">
+               <label className="text-xs font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Browser</label>
+               <select 
+                 value={browser} 
+                 onChange={(e) => setBrowser(e.target.value as any)}
+                 className="p-2 border-2 border-slate-200 dark:border-slate-600 rounded bg-white dark:bg-slate-700 text-slate-800 dark:text-white"
+               >
+                 <option value="chrome">Chrome / Default</option>
+                 <option value="firefox">Firefox</option>
+                 <option value="samsung">Samsung Internet</option>
+               </select>
+             </div>
+           )}
+        </div>
 
         {(platform === 'desktop') && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
@@ -102,12 +129,6 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
             >
               Go to Downloads
             </a>
-            <button 
-              onClick={() => setPlatform('android')} 
-              style={{ background: 'none', border: 'none', color: '#666', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
-            >
-              {t.onMobile || "On a mobile device? Click here."}
-            </button>
           </div>
         )}
 
@@ -140,15 +161,6 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
               ))}
             </div>
           </div>
-        )}
-
-        {detectedPlatform === 'desktop' && platform !== 'desktop' && (
-          <button 
-            onClick={() => setPlatform('desktop')}
-            style={{ marginTop: '1rem', background: 'none', border: 'none', color: '#666', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
-          >
-            {t.back || "Back"}
-          </button>
         )}
       </div>
     </div>
