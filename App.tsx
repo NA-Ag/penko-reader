@@ -7,7 +7,7 @@ import ReaderInput from './components/ReaderInput';
 import FullTextDisplay from './components/FullTextDisplay';
 import Modal from './components/Modal';
 import { InstallModal } from './components/InstallModal';
-import logo from './penguin-logo.svg';
+import logo from './penguin-reader-logo.svg';
 
 const App: React.FC = () => {
   const [tokens, setTokens] = useState<WordToken[]>([]);
@@ -28,11 +28,40 @@ const App: React.FC = () => {
   const [focusMode, setFocusMode] = useState(false);
   const [modal, setModal] = useState({ isOpen: false, title: '', message: '' });
   const [isInstallModalOpen, setInstallModalOpen] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(false);
 
   const timerRef = useRef<number | null>(null);
 
   // Get current translation object
   const t = TRANSLATIONS[language];
+
+  // Load settings and state from LocalStorage on mount
+  useEffect(() => {
+    try {
+      const savedSettings = localStorage.getItem('penko-settings');
+      if (savedSettings) {
+        const parsed = JSON.parse(savedSettings);
+        if (parsed.wpm) setWpm(parsed.wpm);
+        if (parsed.fontSize) setFontSize(parsed.fontSize);
+        if (parsed.theme) setTheme(parsed.theme);
+        if (parsed.language) setLanguage(parsed.language);
+        if (parsed.dyslexicMode !== undefined) setDyslexicMode(parsed.dyslexicMode);
+        if (parsed.pauseOnPunctuation !== undefined) setPauseOnPunctuation(parsed.pauseOnPunctuation);
+      }
+
+      const savedBook = localStorage.getItem('penko-book');
+      if (savedBook) {
+        const parsed = JSON.parse(savedBook);
+        if (parsed.tokens && parsed.tokens.length > 0) {
+          setTokens(parsed.tokens);
+          setCurrentIndex(parsed.currentIndex || 0);
+          setContentLanguage(parsed.contentLanguage || 'en');
+        }
+      }
+    } catch (e) {
+      console.error("Failed to load saved state", e);
+    }
+  }, []);
 
   // Initialize with empty state when language changes
   useEffect(() => {
@@ -50,6 +79,26 @@ const App: React.FC = () => {
     }
   }, [theme]);
 
+  // Save settings to LocalStorage
+  useEffect(() => {
+    localStorage.setItem('penko-settings', JSON.stringify({
+      wpm, fontSize, theme, language, dyslexicMode, pauseOnPunctuation
+    }));
+  }, [wpm, fontSize, theme, language, dyslexicMode, pauseOnPunctuation]);
+
+  // Save book progress to LocalStorage (only when paused or idle to save performance)
+  useEffect(() => {
+    if (tokens.length > 0 && status !== ReaderStatus.PLAYING) {
+      try {
+        localStorage.setItem('penko-book', JSON.stringify({
+          tokens, currentIndex, contentLanguage
+        }));
+      } catch (e) {
+        console.warn("Book too large to save to local storage");
+      }
+    }
+  }, [tokens, currentIndex, status, contentLanguage]);
+
   // Handle PWA Install Prompt
   useEffect(() => {
     const handler = (e: any) => {
@@ -58,6 +107,17 @@ const App: React.FC = () => {
     };
     window.addEventListener('beforeinstallprompt', handler);
     return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
+
+  // Check if running in standalone mode (installed)
+  useEffect(() => {
+    const checkStandalone = () => {
+      const isStandaloneMode = window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+      setIsStandalone(isStandaloneMode);
+    };
+    checkStandalone();
+    window.addEventListener('resize', checkStandalone);
+    return () => window.removeEventListener('resize', checkStandalone);
   }, []);
 
   // Timer Tick
@@ -186,7 +246,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleContentReady = (text: string, lang: LanguageCode = 'en') => {
+  const handleContentReady = useCallback((text: string, lang: LanguageCode = 'en') => {
     setContentLanguage(lang);
     if (lang !== 'ja' && lang !== 'zh') {
       setVerticalMode(false);
@@ -196,7 +256,7 @@ const App: React.FC = () => {
     setCurrentIndex(0);
     setStatus(ReaderStatus.IDLE);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  }, []);
 
   // Keyboard Shortcuts
   useEffect(() => {
@@ -247,14 +307,13 @@ const App: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>
           </button>
-          <img src="penguin-logo.svg" alt="Penko" className="w-8 h-8" />
-          <img src={logo} alt="Penko" className="w-8 h-8" />
+          <img src={logo} alt="Penko" className="w-20 h-20" />
           <h1 className="text-3xl font-bold tracking-tight text-slate-800 dark:text-white">Penko Reader</h1>
         </div>
 
         <div className="flex items-center gap-4">
-           {/* PWA Install Button (Mobile/Web) */}
-           {(installPrompt || /iPad|iPhone|iPod|Android/.test(navigator.userAgent)) && (
+           {/* PWA Install Button (Mobile/Web) - Hidden if already installed */}
+           {!isStandalone && (installPrompt || /iPad|iPhone|iPod|Android/.test(navigator.userAgent)) && (
              <button
                onClick={handleInstall}
                className="flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white border-2 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] dark:hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] active:translate-y-[4px] active:shadow-none text-sm font-bold uppercase tracking-wide rounded-none transition-all"
@@ -263,13 +322,15 @@ const App: React.FC = () => {
              </button>
            )}
 
-           {/* Electron Download Button (Desktop) */}
-           <button
-             onClick={handleDownload}
-             className="hidden md:flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white border-2 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] dark:hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] active:translate-y-[4px] active:shadow-none text-sm font-bold uppercase tracking-wide rounded-none transition-all"
-           >
-             {t.download}
-           </button>
+           {/* Electron Download Button (Desktop) - Hidden if already installed */}
+           {!isStandalone && (
+             <button
+               onClick={handleDownload}
+               className="hidden md:flex items-center gap-2 px-4 py-2 bg-cyan-600 text-white border-2 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] dark:hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] active:translate-y-[4px] active:shadow-none text-sm font-bold uppercase tracking-wide rounded-none transition-all"
+             >
+               {t.download}
+             </button>
+           )}
 
            {/* Theme Toggle */}
            <button 
