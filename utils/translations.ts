@@ -42,9 +42,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Competitive / Superhuman"
     },
     installModalTitle: "Install Penko Reader",
-    installModalDesc: "Install the app for the best experience and offline access.",
+    installModalDesc: "Install the app for a local offline private experience.",
     installInstructionsIOS: "1. Tap the Share button (square with arrow)\n2. Scroll down and select 'Add to Home Screen'\n3. Tap 'Add' in the top right",
     installInstructionsAndroid: "1. Tap the browser menu (three dots icon)\n2. Select Install App or Add to Home Screen\n3. Follow the on-screen prompt to confirm",
+    installInstructionsFirefox: "1. Tap the browser menu (three dots icon)\n2. Select Install\n3. Follow the prompt",
+    installInstructionsSamsung: "1. Tap the menu icon (three lines)\n2. Select 'Add page to'\n3. Select 'Home screen'",
     installInstructionsDesktop: "Download the offline-capable app for your computer.",
     onMobile: "On a mobile device? Click here.",
     close: "Close"
@@ -90,9 +92,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Competitivo / Sobrehumano"
     },
     installModalTitle: "Instalar Penko Reader",
-    installModalDesc: "Instala la app para la mejor experiencia y acceso sin conexión.",
+    installModalDesc: "Instala la app para una experiencia local, privada y sin conexión.",
     installInstructionsIOS: "1. Toca el botón Compartir (cuadrado con flecha)\n2. Desplázate y selecciona 'Agregar a Inicio'\n3. Toca 'Agregar' arriba a la derecha",
     installInstructionsAndroid: "1. Toca el menú del navegador (tres puntos)\n2. Selecciona Instalar App o Agregar a Inicio\n3. Sigue las instrucciones para confirmar",
+    installInstructionsFirefox: "1. Toca el menú del navegador (tres puntos)\n2. Selecciona Instalar App o Agregar a Inicio\n3. Sigue las instrucciones para confirmar",
+    installInstructionsSamsung: "1. Toca el menú del navegador (tres puntos)\n2. Selecciona Instalar App o Agregar a Inicio\n3. Sigue las instrucciones para confirmar",
     installInstructionsDesktop: "Descarga la aplicación para tu computadora.",
     onMobile: "¿En un dispositivo móvil? Clic aquí.",
     close: "Cerrar"
@@ -138,9 +142,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Surhumain"
     },
     installModalTitle: "Installer Penko Reader",
-    installModalDesc: "Installez l'application pour une meilleure expérience et un accès hors ligne.",
+    installModalDesc: "Installez l'application pour une expérience locale, privée et hors ligne.",
     installInstructionsIOS: "1. Appuyez sur le bouton Partager (carré avec flèche)\n2. Faites défiler et sélectionnez 'Sur l'écran d'accueil'\n3. Appuyez sur 'Ajouter' en haut à droite",
     installInstructionsAndroid: "1. Appuyez sur le menu du navigateur (trois points)\n2. Sélectionnez Installer l'application ou Ajouter à l'écran d'accueil\n3. Suivez les instructions pour confirmer",
+    installInstructionsFirefox: "1. Appuyez sur le menu du navigateur (trois points)\n2. Sélectionnez Installer l'application ou Ajouter à l'écran d'accueil\n3. Suivez les instructions pour confirmer",
+    installInstructionsSamsung: "1. Appuyez sur le menu du navigateur (trois points)\n2. Sélectionnez Installer l'application ou Ajouter à l'écran d'accueil\n3. Suivez les instructions pour confirmer",
     installInstructionsDesktop: "Téléchargez l'application hors ligne pour votre ordinateur.",
     onMobile: "Sur un appareil mobile ? Cliquez ici.",
     close: "Fermer"
@@ -186,9 +192,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Übermenschlich"
     },
     installModalTitle: "Penko Reader installieren",
-    installModalDesc: "Installieren Sie die App für das beste Erlebnis und Offline-Zugriff.",
+    installModalDesc: "Installieren Sie die App für ein lokales, privates Offline-Erlebnis.",
     installInstructionsIOS: "1. Tippen Sie auf Teilen (Quadrat mit Pfeil)\n2. Scrollen Sie und wählen Sie 'Zum Home-Bildschirm'\n3. Tippen Sie oben rechts auf 'Hinzufügen'",
     installInstructionsAndroid: "1. Tippen Sie auf das Browser-Menü (drei Punkte)\n2. Wählen Sie App installieren oder Zum Startbildschirm hinzufügen\n3. Folgen Sie den Anweisungen",
+    installInstructionsFirefox: "1. Tippen Sie auf das Browser-Menü (drei Punkte)\n2. Wählen Sie App installieren oder Zum Startbildschirm hinzufügen\n3. Folgen Sie den Anweisungen",
+    installInstructionsSamsung: "1. Tippen Sie auf das Browser-Menü (drei Punkte)\n2. Wählen Sie App installieren oder Zum Startbildschirm hinzufügen\n3. Folgen Sie den Anweisungen",
     installInstructionsDesktop: "Laden Sie die Offline-App für Ihren Computer herunter.",
     onMobile: "Auf einem mobilen Gerät? Hier klicken.",
     close: "Schließen"
@@ -234,9 +242,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "超人的"
     },
     installModalTitle: "Penko Readerをインストール",
-    installModalDesc: "最高の体験とオフラインアクセスのためにアプリをインストールしてください。",
+    installModalDesc: "ローカル、プライベート、オフラインでの体験のためにアプリをインストールしてください。",
     installInstructionsIOS: "1. 共有ボタン（矢印付きの四角）をタップ\n2. スクロールして「ホーム画面に追加」を選択\n3. 右上の「追加」をタップ",
     installInstructionsAndroid: "1. ブラウザメニュー（3つの点）をタップ\n2. 「アプリをインストール」または「ホーム画面に追加」を選択\n3. 画面の指示に従って確認",
+    installInstructionsFirefox: "1. ブラウザメニュー（3つの点）をタップ\n2. 「アプリをインストール」または「ホーム画面に追加」を選択\n3. 画面の指示に従って確認",
+    installInstructionsSamsung: "1. ブラウザメニュー（3つの点）をタップ\n2. 「アプリをインストール」または「ホーム画面に追加」を選択\n3. 画面の指示に従って確認",
     installInstructionsDesktop: "コンピュータ用のオフライン対応アプリをダウンロード。",
     onMobile: "モバイルデバイスですか？ここをクリック。",
     close: "閉じる"
@@ -282,9 +292,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Сверхчеловек"
     },
     installModalTitle: "Установить Penko Reader",
-    installModalDesc: "Установите приложение для лучшей работы и офлайн-доступа.",
+    installModalDesc: "Установите приложение для локального, частного и автономного использования.",
     installInstructionsIOS: "1. Нажмите кнопку Поделиться (квадрат со стрелкой)\n2. Прокрутите и выберите 'На экран «Домой»'\n3. Нажмите 'Добавить' в правом верхнем углу",
     installInstructionsAndroid: "1. Нажмите меню браузера (три точки)\n2. Выберите Установить приложение или Добавить на гл. экран\n3. Следуйте инструкциям на экране",
+    installInstructionsFirefox: "1. Нажмите меню браузера (три точки)\n2. Выберите Установить приложение или Добавить на гл. экран\n3. Следуйте инструкциям на экране",
+    installInstructionsSamsung: "1. Нажмите меню браузера (три точки)\n2. Выберите Установить приложение или Добавить на гл. экран\n3. Следуйте инструкциям на экране",
     installInstructionsDesktop: "Скачайте офлайн-приложение для вашего компьютера.",
     onMobile: "На мобильном устройстве? Нажмите здесь.",
     close: "Закрыть"
@@ -330,9 +342,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Надлюдина"
     },
     installModalTitle: "Встановити Penko Reader",
-    installModalDesc: "Встановіть додаток для найкращого досвіду та офлайн-доступу.",
+    installModalDesc: "Встановіть додаток для локального, приватного та автономного використання.",
     installInstructionsIOS: "1. Натисніть кнопку Поділитися (квадрат зі стрілкою)\n2. Прокрутіть і виберіть 'На початковий екран'\n3. Натисніть 'Додати' у верхньому правому куті",
     installInstructionsAndroid: "1. Натисніть меню браузера (три крапки)\n2. Виберіть Встановити додаток або Додати на гол. екран\n3. Дотримуйтесь інструкцій на екрані",
+    installInstructionsFirefox: "1. Натисніть меню браузера (три крапки)\n2. Виберіть Встановити додаток або Додати на гол. екран\n3. Дотримуйтесь інструкцій на екрані",
+    installInstructionsSamsung: "1. Натисніть меню браузера (три крапки)\n2. Виберіть Встановити додаток або Додати на гол. екран\n3. Дотримуйтесь інструкцій на екрані",
     installInstructionsDesktop: "Завантажте офлайн-додаток для вашого комп'ютера.",
     onMobile: "На мобільному пристрої? Натисніть тут.",
     close: "Закрити"
@@ -378,9 +392,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Sovrumano"
     },
     installModalTitle: "Installa Penko Reader",
-    installModalDesc: "Installa l'app per la migliore esperienza e l'accesso offline.",
+    installModalDesc: "Installa l'app per un'esperienza locale, privata e offline.",
     installInstructionsIOS: "1. Tocca il pulsante Condividi (quadrato con freccia)\n2. Scorri e seleziona 'Aggiungi alla schermata Home'\n3. Tocca 'Aggiungi' in alto a destra",
     installInstructionsAndroid: "1. Tocca il menu del browser (tre puntini)\n2. Seleziona Installa app o Aggiungi a schermata Home\n3. Segui le istruzioni per confermare",
+    installInstructionsFirefox: "1. Tocca il menu del browser (tre puntini)\n2. Seleziona Installa app o Aggiungi a schermata Home\n3. Segui le istruzioni per confermare",
+    installInstructionsSamsung: "1. Tocca il menu del browser (tre puntini)\n2. Seleziona Installa app o Aggiungi a schermata Home\n3. Segui le istruzioni per confermare",
     installInstructionsDesktop: "Scarica l'app offline per il tuo computer.",
     onMobile: "Su un dispositivo mobile? Clicca qui.",
     close: "Chiudi"
@@ -426,9 +442,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "Sobre-humano"
     },
     installModalTitle: "Instalar Penko Reader",
-    installModalDesc: "Instale o aplicativo para a melhor experiência e acesso offline.",
+    installModalDesc: "Instale o aplicativo para uma experiência local, privada e offline.",
     installInstructionsIOS: "1. Toque no botão Compartilhar (quadrado com seta)\n2. Role e selecione 'Adicionar à Tela de Início'\n3. Toque em 'Adicionar' no canto superior direito",
     installInstructionsAndroid: "1. Toque no menu do navegador (três pontos)\n2. Selecione Instalar App ou Adicionar à Tela Inicial\n3. Siga as instruções para confirmar",
+    installInstructionsFirefox: "1. Toque no menu do navegador (três pontos)\n2. Selecione Instalar App ou Adicionar à Tela Inicial\n3. Siga as instruções para confirmar",
+    installInstructionsSamsung: "1. Toque no menu do navegador (três pontos)\n2. Selecione Instalar App ou Adicionar à Tela Inicial\n3. Siga as instruções para confirmar",
     installInstructionsDesktop: "Baixe o aplicativo offline para o seu computador.",
     onMobile: "Em um dispositivo móvel? Clique aqui.",
     close: "Fechar"
@@ -474,9 +492,11 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
       superhuman: "超人"
     },
     installModalTitle: "安装 Penko Reader",
-    installModalDesc: "安装应用程序以获得最佳体验和离线访问。",
+    installModalDesc: "安装应用程序以获得本地、私密和离线体验。",
     installInstructionsIOS: "1. 点击分享按钮（带箭头的方块）\n2. 向下滚动并选择“添加到主屏幕”\n3. 点击右上角的“添加”",
     installInstructionsAndroid: "1. 点击浏览器菜单（三个点图标）\n2. 选择安装应用或添加到主屏幕\n3. 按照屏幕提示进行确认",
+    installInstructionsFirefox: "1. 点击浏览器菜单（三个点图标）\n2. 选择安装应用或添加到主屏幕\n3. 按照屏幕提示进行确认",
+    installInstructionsSamsung: "1. 点击浏览器菜单（三个点图标）\n2. 选择安装应用或添加到主屏幕\n3. 按照屏幕提示进行确认",
     installInstructionsDesktop: "下载适用于您计算机的离线应用程序。",
     onMobile: "在移动设备上？点击这里。",
     close: "关闭"
