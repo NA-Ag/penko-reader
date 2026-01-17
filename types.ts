@@ -64,6 +64,13 @@ export interface Translation {
   focusMode: string;
   exitFocus: string;
   wpmLabels: WpmLabels;
+  installModalTitle: string;
+  installModalDesc: string;
+  installInstructionsIOS: string;
+  installInstructionsAndroid: string;
+  installInstructionsDesktop: string;
+  onMobile: string;
+  close: string;
 }
 
 export interface Chapter {
