@@ -9,17 +9,19 @@ interface InstallModalProps {
 
 export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }) => {
   const [platform, setPlatform] = useState<'desktop' | 'ios' | 'android'>('desktop');
+  const [detectedPlatform, setDetectedPlatform] = useState<'desktop' | 'ios' | 'android'>('desktop');
 
   useEffect(() => {
     const ua = navigator.userAgent.toLowerCase();
+    let p: 'desktop' | 'ios' | 'android' = 'desktop';
     if (/iphone|ipad|ipod/.test(ua)) {
-      setPlatform('ios');
+      p = 'ios';
     } else if (/android/.test(ua)) {
-      setPlatform('android');
-    } else {
-      setPlatform('desktop');
+      p = 'android';
     }
-  }, []);
+    setPlatform(p);
+    setDetectedPlatform(p);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -71,12 +73,12 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
         <img src="/penguin-reader-logo.svg" alt="Penko Reader" style={{ width: '64px', height: '64px', marginBottom: '1rem' }} />
 
         <h2 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.5rem' }}>
-          {platform === 'desktop' ? t.download : t.installPwa}
+          {platform === 'desktop' ? t.download : (t.installModalTitle || t.installPwa)}
         </h2>
 
         {(platform === 'desktop') && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-            <p>Download the offline-capable app for your computer.</p>
+            <p>{t.installInstructionsDesktop || "Download the offline-capable app for your computer."}</p>
             <a 
               href="https://github.com/NA-Ag/penko-reader/releases/latest" 
               target="_blank" 
@@ -97,64 +99,44 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
               onClick={() => setPlatform('android')} 
               style={{ background: 'none', border: 'none', color: '#666', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
             >
-              On a mobile device? Click here.
+              {t.onMobile || "On a mobile device? Click here."}
             </button>
           </div>
         )}
 
         {platform === 'ios' && (
           <div style={{ width: '100%' }}>
-            <p style={{ marginBottom: '1rem' }}>Install Penko Reader on your home screen for the best offline experience:</p>
+            <p style={{ marginBottom: '1rem' }}>{t.installModalDesc || "Install Penko Reader on your home screen for the best offline experience:"}</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', background: 'rgba(0,0,0,0.05)', padding: '1rem', borderRadius: '8px', textAlign: 'left' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>1.</span>
-                <span>Tap the <strong>Share</strong> button (square with arrow)</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: 'auto' }}>
-                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                  <polyline points="16 6 12 2 8 6" />
-                  <line x1="12" y1="2" x2="12" y2="15" />
-                </svg>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>2.</span>
-                <span>Scroll down and tap <strong>Add to Home Screen</strong></span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: 'auto' }}>
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                  <line x1="12" y1="8" x2="12" y2="16" />
-                  <line x1="8" y1="12" x2="16" y2="12" />
-                </svg>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>3.</span>
-                <span>Tap <strong>Add</strong> in the top right corner</span>
-              </div>
+              {(t.installInstructionsIOS || "1. Tap the Share button\n2. Select 'Add to Home Screen'\n3. Tap 'Add'").split('\n').map((line: string, i: number) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
+                  <span>{line}</span>
+                </div>
+              ))}
             </div>
           </div>
         )}
 
         {platform === 'android' && (
           <div style={{ width: '100%' }}>
-            <p style={{ marginBottom: '1rem' }}>Install Penko Reader for offline access:</p>
+            <p style={{ marginBottom: '1rem' }}>{t.installModalDesc || "Install Penko Reader for offline access:"}</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', background: 'rgba(0,0,0,0.05)', padding: '1rem', borderRadius: '8px', textAlign: 'left' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>1.</span>
-                <span>Tap the browser menu (three dots icon)</span>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: 'auto' }}>
-                  <circle cx="12" cy="12" r="1" />
-                  <circle cx="12" cy="5" r="1" />
-                  <circle cx="12" cy="19" r="1" />
-                </svg>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>2.</span>
-                <span>Select <strong>Install App</strong> or <strong>Add to Home Screen</strong></span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <span style={{ fontSize: '1.2rem' }}>3.</span>
-                <span>Follow the on-screen prompt to confirm</span>
-              </div>
+              {(t.installInstructionsAndroid || "1. Tap menu\n2. Install App\n3. Confirm").split('\n').map((line: string, i: number) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
+                  <span>{line}</span>
+                </div>
+              ))}
             </div>
           </div>
+        )}
+
+        {detectedPlatform === 'desktop' && platform !== 'desktop' && (
+          <button 
+            onClick={() => setPlatform('desktop')}
+            style={{ marginTop: '1rem', background: 'none', border: 'none', color: '#666', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
+          >
+            {t.back || "Back"}
+          </button>
         )}
       </div>
     </div>
