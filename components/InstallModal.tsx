@@ -74,7 +74,7 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
           {platform === 'desktop' ? t.download : t.installPwa}
         </h2>
 
-        {platform === 'desktop' && (
+        {(platform === 'desktop') && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
             <p>Download the offline-capable app for your computer.</p>
             <a 
@@ -93,6 +93,12 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
             >
               Go to Downloads
             </a>
+            <button 
+              onClick={() => setPlatform('android')} 
+              style={{ background: 'none', border: 'none', color: '#666', textDecoration: 'underline', cursor: 'pointer', fontSize: '0.9rem' }}
+            >
+              On a mobile device? Click here.
+            </button>
           </div>
         )}
 
@@ -102,7 +108,7 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', background: 'rgba(0,0,0,0.05)', padding: '1rem', borderRadius: '8px', textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ fontSize: '1.2rem' }}>1.</span>
-                <span>Tap the <strong>Share</strong> button</span>
+                <span>Tap the <strong>Share</strong> button (square with arrow)</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: 'auto' }}>
                   <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
                   <polyline points="16 6 12 2 8 6" />
@@ -111,12 +117,16 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ fontSize: '1.2rem' }}>2.</span>
-                <span>Tap <strong>Add to Home Screen</strong></span>
+                <span>Scroll down and tap <strong>Add to Home Screen</strong></span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: 'auto' }}>
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                   <line x1="12" y1="8" x2="12" y2="16" />
                   <line x1="8" y1="12" x2="16" y2="12" />
                 </svg>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '1.2rem' }}>3.</span>
+                <span>Tap <strong>Add</strong> in the top right corner</span>
               </div>
             </div>
           </div>
@@ -128,7 +138,7 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', background: 'rgba(0,0,0,0.05)', padding: '1rem', borderRadius: '8px', textAlign: 'left' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ fontSize: '1.2rem' }}>1.</span>
-                <span>Tap the browser menu (three dots)</span>
+                <span>Tap the browser menu (three dots icon)</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginLeft: 'auto' }}>
                   <circle cx="12" cy="12" r="1" />
                   <circle cx="12" cy="5" r="1" />
@@ -138,6 +148,10 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ fontSize: '1.2rem' }}>2.</span>
                 <span>Select <strong>Install App</strong> or <strong>Add to Home Screen</strong></span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '1.2rem' }}>3.</span>
+                <span>Follow the on-screen prompt to confirm</span>
               </div>
             </div>
           </div>
