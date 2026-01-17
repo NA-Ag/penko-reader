@@ -1,8 +1,9 @@
 import * as pdfjsLib from 'pdfjs-dist';
+// @ts-ignore - Vite specific import for worker
+import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
-// Define the worker source. 
-// We use the same version as the main library from the CDN.
-pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://esm.sh/pdfjs-dist@4.0.379/build/pdf.worker.min.mjs';
+// Define the worker source to use the local bundled version
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 export const readFileContent = async (file: File): Promise<string> => {
   if (file.type === 'text/plain') {
