@@ -5,7 +5,7 @@
   "repository": "github:NA-Ag/penko-reader",
   "description": "An accessibility-focused offline reading tool.",
   "author": "Penko Software <support@penkosoftware.org>",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
