@@ -44,8 +44,12 @@ export const readEpubFile = async (file: File): Promise<string> => {
         const content = await zip.file(filePath)?.async("text");
         
         if (content) {
-          // Simple HTML strip (can be improved with DOMParser if needed)
           const doc = new DOMParser().parseFromString(content, "text/html");
+          
+          // Replace block elements with newlines to preserve formatting
+          const blocks = doc.querySelectorAll('p, div, br, h1, h2, h3, h4, h5, h6, li');
+          blocks.forEach(block => block.after(doc.createTextNode('\n')));
+
           const text = doc.body.textContent || "";
           
           // Clean up whitespace
