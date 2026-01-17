@@ -32,13 +32,7 @@ export default defineConfig(({ command, mode }) => {
             icons: [
               {
                 src: 'penguin-reader-logo.svg',
-                sizes: '192x192',
-                type: 'image/svg+xml',
-                purpose: 'any maskable'
-              },
-              {
-                src: 'penguin-reader-logo.svg',
-                sizes: '512x512',
+                sizes: 'any',
                 type: 'image/svg+xml',
                 purpose: 'any maskable'
               }
