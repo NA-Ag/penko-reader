@@ -68,6 +68,8 @@ export interface Translation {
   installModalDesc: string;
   installInstructionsIOS: string;
   installInstructionsAndroid: string;
+  installInstructionsFirefox: string;
+  installInstructionsSamsung: string;
   installInstructionsDesktop: string;
   onMobile: string;
   close: string;
