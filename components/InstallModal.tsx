@@ -10,6 +10,7 @@ interface InstallModalProps {
 export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }) => {
   const [platform, setPlatform] = useState<'desktop' | 'ios' | 'android'>('desktop');
   const [detectedPlatform, setDetectedPlatform] = useState<'desktop' | 'ios' | 'android'>('desktop');
+  const [browser, setBrowser] = useState<'chrome' | 'firefox' | 'samsung' | 'safari' | 'generic'>('generic');
 
   useEffect(() => {
     const ua = navigator.userAgent.toLowerCase();
@@ -21,6 +22,19 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
     }
     setPlatform(p);
     setDetectedPlatform(p);
+
+    // Browser detection
+    if (ua.includes('samsungbrowser')) {
+      setBrowser('samsung');
+    } else if (ua.includes('firefox') || ua.includes('fxios')) {
+      setBrowser('firefox');
+    } else if (ua.includes('chrome') || ua.includes('crios')) {
+      setBrowser('chrome');
+    } else if (ua.includes('safari')) {
+      setBrowser('safari');
+    } else {
+      setBrowser('generic');
+    }
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -83,15 +97,8 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
               href="https://github.com/NA-Ag/penko-reader/releases/latest" 
               target="_blank" 
               rel="noopener noreferrer"
-              style={{
-                backgroundColor: '#7c3aed',
-                color: 'white',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                fontWeight: '600',
-                transition: 'background-color 0.2s'
-              }}
+              className="flex justify-center items-center gap-2 px-4 py-2 bg-cyan-600 text-white border-2 border-slate-900 dark:border-white shadow-[4px_4px_0px_0px_rgba(15,23,42,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_rgba(15,23,42,1)] dark:hover:shadow-[2px_2px_0px_0px_rgba(255,255,255,1)] active:translate-y-[4px] active:shadow-none text-sm font-bold uppercase tracking-wide rounded-none transition-all"
+              style={{ textDecoration: 'none' }}
             >
               Go to Downloads
             </a>
@@ -119,9 +126,14 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
 
         {platform === 'android' && (
           <div style={{ width: '100%' }}>
-            <p style={{ marginBottom: '1rem' }}>{t.installModalDesc || "Install Penko Reader for offline access:"}</p>
+            <p style={{ marginBottom: '1rem' }}>{t.installModalDesc || "Install the app for a local offline private experience."}</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', background: 'rgba(0,0,0,0.05)', padding: '1rem', borderRadius: '8px', textAlign: 'left' }}>
-              {(t.installInstructionsAndroid || "1. Tap menu\n2. Install App\n3. Confirm").split('\n').map((line: string, i: number) => (
+              {(() => {
+                let instructions = t.installInstructionsAndroid;
+                if (browser === 'firefox') instructions = t.installInstructionsFirefox || instructions;
+                if (browser === 'samsung') instructions = t.installInstructionsSamsung || instructions;
+                return instructions || "1. Tap menu\n2. Install App\n3. Confirm";
+              })().split('\n').map((line: string, i: number) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'start', gap: '0.5rem' }}>
                   <span>{line}</span>
                 </div>
