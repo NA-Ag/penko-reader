@@ -1,6 +1,6 @@
 {
   "name": "Penko Reader",
-  "short_name": "Penko Reader",
+  "short_name": "P-Reader",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f8fafc",
@@ -17,11 +17,6 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
-    },
-    {
-      "src": "./penguin-reader-logo.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
     }
   ]
 }
