@@ -47,6 +47,10 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
   const [selectionStart, setSelectionStart] = useState<{x: number, y: number} | null>(null);
   const [selectionCurrent, setSelectionCurrent] = useState<{x: number, y: number} | null>(null);
   const currentDrawingRef = useRef<{x: number, y: number}[]>([]);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [pinchStartDist, setPinchStartDist] = useState<number | null>(null);
+  const [startScale, setStartScale] = useState<number>(1.5);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const renderTaskRef = useRef<any>(null);
   
@@ -280,7 +284,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
     }
   }, [pdfPage, scale, book.highlights, book.drawings, book.fileType]);
 
-  const handlePdfMouseDown = (e: React.MouseEvent) => {
+  const handlePdfPointerDown = (e: React.PointerEvent) => {
     if (!canvasRef.current) return;
     const rect = canvasRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width;
@@ -327,9 +331,11 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
     if (isPen) {
         currentDrawingRef.current = [{x, y}];
         const ctx = canvasRef.current.getContext('2d');
+        const drawX = e.clientX - rect.left;
+        const drawY = e.clientY - rect.top;
         if (ctx) {
             ctx.beginPath();
-            ctx.moveTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+            ctx.moveTo(drawX, drawY);
             ctx.strokeStyle = highlightColor;
             ctx.lineWidth = 2 * scale;
             ctx.lineCap = 'round';
@@ -344,7 +350,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
     }
   };
 
-  const handlePdfMouseUp = (e: React.MouseEvent) => {
+  const handlePdfPointerUp = (e: React.PointerEvent) => {
     if (isPen && currentDrawingRef.current.length > 0) {
         const newDrawing = {
             page: currentPage,
@@ -377,11 +383,14 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
     setSelectionCurrent(null);
   };
 
-  const handlePdfMouseMove = (e: React.MouseEvent) => {
+  const handlePdfPointerMove = (e: React.PointerEvent) => {
     if (isPen && currentDrawingRef.current.length > 0 && canvasRef.current) {
         const ctx = canvasRef.current.getContext('2d');
+        const rect = canvasRef.current.getBoundingClientRect();
+        const drawX = e.clientX - rect.left;
+        const drawY = e.clientY - rect.top;
         if (ctx) {
-            ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+            ctx.lineTo(drawX, drawY);
             ctx.stroke();
             const rect = canvasRef.current.getBoundingClientRect();
             currentDrawingRef.current.push({
@@ -460,6 +469,52 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
           scrollToId(toc[newIndex].id);
           setCurrentChapterIndex(newIndex);
       }
+  };
+
+  // Swipe Handlers
+  const onTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      // Pinch started
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      setPinchStartDist(dist);
+      setStartScale(scale);
+      return;
+    }
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2 && pinchStartDist) {
+      // Pinching
+      const dist = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const factor = dist / pinchStartDist;
+      const newScale = Math.min(5.0, Math.max(0.5, startScale * factor));
+      setScale(newScale);
+      return;
+    }
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    setPinchStartDist(null);
+    if (!touchStart || !touchEnd) return;
+    
+    // Don't swipe if drawing tools are active
+    if (isPen || isHighlighting || isErasing) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) turnPage('next');
+    if (isRightSwipe) turnPage('prev');
   };
 
   // Keyboard navigation
@@ -695,7 +750,13 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
 
       {/* PDF Content Area */}
       {book.fileType === 'pdf' ? (
-        <div className="flex-1 overflow-auto bg-slate-100 dark:bg-slate-900 relative" onClick={() => { setShowControls(!showControls); setShowSettings(false); }}>
+        <div 
+            className="flex-1 overflow-auto bg-slate-100 dark:bg-slate-900 relative touch-pan-y" 
+            onClick={() => { setShowControls(!showControls); setShowSettings(false); }}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+        >
            <div className="min-h-full min-w-full flex items-center justify-center p-8">
              {error ? (
              <div className="flex flex-col items-center justify-center h-full text-slate-500 dark:text-slate-400 p-8 text-center">
@@ -708,10 +769,10 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                <canvas 
                  ref={canvasRef} 
                  className={`block bg-white ${isHighlighting ? 'cursor-crosshair' : ''}`}
-                 style={{ cursor: isErasing ? ERASER_CURSOR : isPen ? PEN_CURSOR : undefined }}
-                 onMouseDown={handlePdfMouseDown}
-                 onMouseUp={handlePdfMouseUp}
-                 onMouseMove={handlePdfMouseMove}
+                 style={{ cursor: isErasing ? ERASER_CURSOR : isPen ? PEN_CURSOR : undefined, touchAction: (isPen || isHighlighting || isErasing) ? 'none' : 'auto' }}
+                 onPointerDown={handlePdfPointerDown}
+                 onPointerUp={handlePdfPointerUp}
+                 onPointerMove={handlePdfPointerMove}
                />
                {isHighlighting && selectionStart && selectionCurrent && (
                   <div 
@@ -744,6 +805,9 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
             padding: '60px 20px', // Top/Bottom padding for bars
         }}
         onClick={() => { setShowControls(!showControls); setShowSettings(false); }}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
         onScroll={handleScroll}
       >
         <div 
