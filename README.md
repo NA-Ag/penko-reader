@@ -13,7 +13,7 @@ This application uses the **RSVP (Rapid Serial Visual Presentation)** method to 
     *   OpenDyslexic font support.
     *   High contrast themes (Light/Dark).
     *   Adjustable font size and speed (WPM).
-*   **Multi-Language Support:** Interface and library support for 10+ languages.
+*   **Multi-Language Support:** Interface and library support for 10 languages (more planned).
 *   **Format Support:** Read `.txt`, `.pdf`, and `.epub` files locally.
 
 ## Pending Features
