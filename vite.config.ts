@@ -10,7 +10,7 @@ export default defineConfig({
       includeAssets: ['penguin-reader-logo.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: "Penko Reader",
-        short_name: "Penko",
+        short_name: "Reader",
         start_url: "/",
         display: "standalone",
         background_color: "#f8fafc",
@@ -71,5 +71,6 @@ export default defineConfig({
   },
   build: {
     target: 'esnext'
-  }
+  },
+  base: './'
 });
