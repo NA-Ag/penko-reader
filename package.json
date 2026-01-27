@@ -1,18 +1,19 @@
 {
   "name": "penko-reader",
   "private": true,
-  "main": "main.js",
+  "main": "electron/main.js",
   "repository": "github:NA-Ag/penko-reader",
   "description": "An accessibility-focused offline reading tool.",
   "author": "Penko Software <support@penkosoftware.org>",
-  "version": "2.0.7",
+  "version": "2.0.9",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc && vite build",
     "preview": "vite preview",
-    "electron:build": "vite build --base ./ && electron-builder",
-    "electron:publish": "vite build --base ./ && electron-builder --publish always"
+    "generate-icons": "node generate-icons.js",
+    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
+    "electron:build": "npm run build && electron-builder"
   },
   "dependencies": {
     "jszip": "^3.10.1",
@@ -24,11 +25,13 @@
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^4.2.1",
+    "concurrently": "^9.2.1",
     "electron": "^28.0.0",
     "electron-builder": "^24.9.1",
     "typescript": "~5.8.2",
     "vite": "^5.2.0",
-    "vite-plugin-pwa": "^0.17.4"
+    "vite-plugin-pwa": "^0.17.4",
+    "wait-on": "^9.0.3"
   },
   "build": {
     "appId": "org.penkosoftware.reader",
@@ -38,11 +41,11 @@
       "releaseType": "release"
     },
     "directories": {
-      "output": "dist-electron"
+      "output": "release"
     },
     "files": [
       "dist/**/*",
-      "main.js"
+      "electron/**/*"
     ],
     "linux": {
       "target": [
