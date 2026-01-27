@@ -7,7 +7,6 @@ import ReaderInput from './components/ReaderInput';
 import FullTextDisplay from './components/FullTextDisplay';
 import Modal from './components/Modal';
 import { InstallModal } from './components/InstallModal';
-import logo from './penguin-reader-logo.svg';
 import BookReader from './components/BookReader';
 import { saveBook, loadBooks, deleteBook } from './utils/persistence';
 import { readFileContent } from './utils/fileProcessor';
@@ -723,7 +722,7 @@ const App: React.FC = () => {
       {(view !== 'reader' || status === ReaderStatus.IDLE) && (
       <div className={`w-full flex flex-col md:flex-row items-center justify-between mb-8 gap-4 transition-all duration-500`}>
         <div className="flex items-center gap-2">
-          <img src={logo} alt="Penko" className="w-20 h-20" />
+          <img src="/penguin-reader-logo.svg" alt="Penko" className="w-20 h-20" />
           <h1 className="text-3xl font-bold tracking-tight text-slate-800 dark:text-white">Penko Reader</h1>
         </div>
 
@@ -1189,7 +1188,7 @@ const App: React.FC = () => {
             <div className="w-full max-w-sm bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-400 shadow-[8px_8px_0px_0px_rgba(15,23,42,0.2)] rounded-xl overflow-hidden">
               <div className="p-6 flex flex-col items-center text-center gap-4">
                 <div className="relative">
-                   <img src={logo} alt="Penko" className="w-24 h-24 animate-bounce" />
+                   <img src="/penguin-reader-logo.svg" alt="Penko" className="w-24 h-24 animate-bounce" />
                 </div>
                 
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white">
@@ -1224,7 +1223,7 @@ const App: React.FC = () => {
             <div className="w-full max-w-sm bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-400 shadow-[8px_8px_0px_0px_rgba(15,23,42,0.2)] rounded-xl overflow-hidden">
               <div className="p-6 flex flex-col items-center text-center gap-4">
                 <div className="relative">
-                   <img src={logo} alt="Penko" className="w-24 h-24 animate-bounce" />
+                   <img src="/penguin-reader-logo.svg" alt="Penko" className="w-24 h-24 animate-bounce" />
                 </div>
                 
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white">
@@ -1260,7 +1259,7 @@ const App: React.FC = () => {
               
               <div className="p-6 pb-4 flex flex-col items-center text-center gap-4 shrink-0">
                 <div className="relative">
-                   <img src={logo} alt="Penko" className="w-24 h-24 animate-bounce" />
+                   <img src="/penguin-reader-logo.svg" alt="Penko" className="w-24 h-24 animate-bounce" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white">
                   {t.category}
@@ -1325,7 +1324,7 @@ const App: React.FC = () => {
             <div className="w-full max-w-sm bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-400 shadow-[8px_8px_0px_0px_rgba(15,23,42,0.2)] rounded-xl overflow-hidden">
               <div className="p-6 flex flex-col items-center text-center gap-4">
                 <div className="relative">
-                   <img src={logo} alt="Penko" className="w-24 h-24 animate-bounce" />
+                   <img src="/penguin-reader-logo.svg" alt="Penko" className="w-24 h-24 animate-bounce" />
                 </div>
                 
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white">
@@ -1367,7 +1366,7 @@ const App: React.FC = () => {
             <div className="w-full max-w-sm bg-white dark:bg-slate-800 border-2 border-slate-900 dark:border-slate-400 shadow-[8px_8px_0px_0px_rgba(15,23,42,0.2)] rounded-xl overflow-hidden" onClick={e => e.stopPropagation()}>
               <div className="p-6 flex flex-col items-center text-center gap-4">
                 <div className="relative">
-                   <img src={logo} alt="Penko" className="w-20 h-20 animate-bounce" />
+                   <img src="/penguin-reader-logo.svg" alt="Penko" className="w-20 h-20 animate-bounce" />
                 </div>
                 
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white">
