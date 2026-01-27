@@ -7,29 +7,33 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      manifestFilename: 'manifest.json',
       includeAssets: ['penguin-reader-logo.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: "Penko Reader",
-        short_name: "Penko",
-        start_url: "/",
+        short_name: "Reader",
+        start_url: "./",
         display: "standalone",
         background_color: "#f8fafc",
         theme_color: "#2563EB",
         icons: [
           {
-            src: "/penguin-reader-logo.svg",
+            src: "./penguin-reader-logo.svg",
             sizes: "any",
-            type: "image/svg+xml"
+            type: "image/svg+xml",
+            purpose: "any maskable"
           },
           {
-            src: "/pwa-192x192.png",
+            src: "./pwa-192x192.png",
             sizes: "192x192",
-            type: "image/png"
+            type: "image/png",
+            purpose: "any maskable"
           },
           {
-            src: "/pwa-512x512.png",
+            src: "./pwa-512x512.png",
             sizes: "512x512",
-            type: "image/png"
+            type: "image/png",
+            purpose: "any maskable"
           }
         ]
       },
@@ -71,5 +75,6 @@ export default defineConfig({
   },
   build: {
     target: 'esnext'
-  }
+  },
+  base: './'
 });

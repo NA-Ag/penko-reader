@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Translation } from '../types';
-import logo from '../penguin-reader-logo.svg';
 
 interface InstallModalProps {
   isOpen: boolean;
@@ -81,7 +80,7 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
           ×
         </button>
 
-        <img src={logo} alt="Penko Reader" style={{ width: '64px', height: '64px', marginBottom: '1rem' }} />
+        <img src="penguin-reader-logo.svg" alt="Penko Reader" style={{ width: '64px', height: '64px', marginBottom: '1rem' }} />
 
         <h2 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.5rem' }}>
           {t.installModalTitle || t.installPwa}
