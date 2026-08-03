@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const publicDir = join(__dirname, 'public');
-const inputFile = join(publicDir, 'penguin-reader-logo.svg');
+const inputFile = join(publicDir, 'penguin-logo.svg');
 
 const sizes = [192, 512];
 
@@ -17,6 +17,14 @@ async function generateIcons() {
       .png()
       .toFile(outputFile);
   }
+  
+  const appleTouchFile = join(publicDir, 'apple-touch-icon.png');
+  console.log(`Generating ${appleTouchFile}...`);
+  await sharp(inputFile)
+    .resize(180, 180)
+    .png()
+    .toFile(appleTouchFile);
+    
   console.log('Icons generated successfully!');
 }
 

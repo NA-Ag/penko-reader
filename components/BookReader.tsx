@@ -90,6 +90,20 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
     }
     return 'light';
   });
+
+  const [fontFamily, setFontFamily] = useState<'serif' | 'sans' | 'dyslexic'>(() => {
+    try {
+      const saved = localStorage.getItem('penko-reader-settings');
+      return saved ? JSON.parse(saved).fontFamily || 'serif' : 'serif';
+    } catch { return 'serif'; }
+  });
+
+  const [marginSize, setMarginSize] = useState<'narrow' | 'medium' | 'wide'>(() => {
+    try {
+      const saved = localStorage.getItem('penko-reader-settings');
+      return saved ? JSON.parse(saved).marginSize || 'medium' : 'medium';
+    } catch { return 'medium'; }
+  });
   
   const [toc, setToc] = useState<{id: string, label: string, index: number}[]>([]);
   const [processedContent, setProcessedContent] = useState(book.content);
@@ -120,9 +134,11 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
       fontSize,
       lineHeight,
       readerTheme,
-      highlightColor
+      highlightColor,
+      fontFamily,
+      marginSize
     }));
-  }, [fontSize, lineHeight, readerTheme, highlightColor]);
+  }, [fontSize, lineHeight, readerTheme, highlightColor, fontFamily, marginSize]);
 
   // Parse content for TOC and inject IDs
   useEffect(() => {
@@ -536,19 +552,19 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
 
   const getThemeClasses = () => {
       switch (readerTheme) {
-          case 'sepia': return 'bg-[#f4ecd8] text-[#5b4636]';
-          case 'dark': return 'bg-slate-900 text-slate-300';
-          case 'black': return 'bg-black text-gray-400';
-          default: return 'bg-white text-slate-900';
+          case 'sepia': return 'bg-[#fcf7ec] text-[#4a2f1b]';
+          case 'dark': return 'bg-[#1d120a] text-[#ebd6c0]';
+          case 'black': return 'bg-black text-[#bdae9c]';
+          default: return 'bg-[#fffdf9] text-[#2d1b0f]';
       }
   };
 
   const getControlClasses = () => {
       switch (readerTheme) {
-          case 'sepia': return 'bg-[#f4ecd8]/95 border-[#e3dcc5] text-[#5b4636]';
-          case 'dark': return 'bg-slate-900/95 border-slate-800 text-slate-300';
-          case 'black': return 'bg-black/90 border-gray-800 text-gray-400';
-          default: return 'bg-white/95 border-slate-200 text-slate-900';
+          case 'sepia': return 'bg-[#fbf5e5]/90 border-amber-900/10 text-[#4a2f1b]';
+          case 'dark': return 'bg-[#24170d]/90 border-amber-900/20 text-[#ebd6c0]';
+          case 'black': return 'bg-[#121212]/95 border-[#2c2c2c] text-[#bdae9c]';
+          default: return 'bg-[#fffdf9]/95 border-amber-950/5 text-[#2d1b0f]';
       }
   };
 
@@ -625,7 +641,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
 
             {/* Settings Popover */}
             {showSettings && (
-                <div className={`absolute top-full right-0 mt-2 w-64 p-4 rounded-xl shadow-xl border z-40 ${getControlClasses()}`}>
+                <div className={`absolute top-full right-0 mt-2 w-64 p-4 rounded-xl shadow-xl border z-40 ${getControlClasses()} border-amber-800/10`}>
                     <div className="space-y-4">
                         {/* Theme */}
                         <div className="flex justify-between gap-2">
@@ -633,7 +649,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                                 <button
                                     key={theme}
                                     onClick={() => setReaderTheme(theme as any)}
-                                    className={`flex-1 h-8 rounded-full border ${readerTheme === theme ? 'ring-2 ring-cyan-500' : 'border-transparent'} shadow-sm`}
+                                    className={`flex-1 h-8 rounded-full border ${readerTheme === theme ? 'ring-2 ring-amber-700' : 'border-transparent'} shadow-sm`}
                                     style={{
                                         backgroundColor: theme === 'light' ? '#fff' : theme === 'sepia' ? '#f4ecd8' : theme === 'dark' ? '#0f172a' : '#000',
                                         color: theme === 'light' ? '#000' : theme === 'sepia' ? '#5b4636' : '#fff'
@@ -645,7 +661,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                         </div>
                         
                         {book.fileType === 'pdf' ? (
-                          <div className="space-y-1">
+                          <div className="space-y-2">
                             {/* Zoom Control */}
                             <div className="flex justify-between text-xs opacity-70">
                                 <span>Zoom</span>
@@ -654,7 +670,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                             <input 
                                 type="range" min="0.5" max="5.0" step="0.1" value={scale}
                                 onChange={(e) => setScale(Number(e.target.value))}
-                                className="w-full h-1 bg-black/20 dark:bg-white/20 rounded-lg appearance-none cursor-pointer accent-cyan-600"
+                                className="w-full h-1 bg-black/20 dark:bg-white/20 rounded-lg appearance-none cursor-pointer accent-amber-700 dark:accent-amber-600"
                             />
                             
                             {/* Highlight Color Picker */}
@@ -686,7 +702,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                                 <input 
                                     type="range" min="12" max="32" step="1" value={fontSize}
                                     onChange={(e) => setFontSize(Number(e.target.value))}
-                                    className="flex-1 h-1 bg-black/20 dark:bg-white/20 rounded-lg appearance-none cursor-pointer accent-cyan-600"
+                                    className="flex-1 h-1 bg-black/20 dark:bg-white/20 rounded-lg appearance-none cursor-pointer accent-amber-700 dark:accent-amber-600"
                                 />
                                 <span className="text-lg">A</span>
                             </div>
@@ -703,9 +719,41 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                                 <input 
                                     type="range" min="1.0" max="2.5" step="0.1" value={lineHeight}
                                     onChange={(e) => setLineHeight(Number(e.target.value))}
-                                    className="flex-1 h-1 bg-black/20 dark:bg-white/20 rounded-lg appearance-none cursor-pointer accent-cyan-600"
+                                    className="flex-1 h-1 bg-black/20 dark:bg-white/20 rounded-lg appearance-none cursor-pointer accent-amber-700 dark:accent-amber-600"
                                 />
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+                            </div>
+                        </div>
+
+                        {/* Font Family */}
+                        <div className="space-y-1 border-t border-amber-900/10 pt-2">
+                            <div className="text-xs opacity-70 mb-1">Font Style</div>
+                            <div className="flex gap-2">
+                                {(['serif', 'sans', 'dyslexic'] as const).map((font) => (
+                                    <button
+                                        key={font}
+                                        onClick={() => setFontFamily(font)}
+                                        className={`flex-1 py-1 text-[10px] font-bold rounded-lg border transition-all ${fontFamily === font ? 'bg-amber-700 text-white border-amber-700 shadow-sm' : 'bg-transparent border-slate-300 dark:border-slate-600'}`}
+                                    >
+                                        {font === 'serif' ? 'Serif' : font === 'sans' ? 'Sans' : 'Dyslexic'}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Margins */}
+                        <div className="space-y-1">
+                            <div className="text-xs opacity-70 mb-1">Margins</div>
+                            <div className="flex gap-2">
+                                {(['narrow', 'medium', 'wide'] as const).map((size) => (
+                                    <button
+                                        key={size}
+                                        onClick={() => setMarginSize(size)}
+                                        className={`flex-1 py-1 text-[10px] font-bold rounded-lg border transition-all ${marginSize === size ? 'bg-amber-700 text-white border-amber-700 shadow-sm' : 'bg-transparent border-slate-300 dark:border-slate-600'}`}
+                                    >
+                                        {size === 'narrow' ? 'Narrow' : size === 'medium' ? 'Medium' : 'Wide'}
+                                    </button>
+                                ))}
                             </div>
                         </div>
                         </>
@@ -732,7 +780,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                       <button 
                         key={i} 
                         onClick={() => scrollToId(item.id)}
-                        className={`block w-full text-left text-sm py-3 px-3 rounded-lg transition-colors truncate ${currentChapterIndex === i ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-medium' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
+                        className={`block w-full text-left text-sm py-3 px-3 rounded-lg transition-colors truncate ${currentChapterIndex === i ? 'bg-amber-100 dark:bg-amber-950/40 text-amber-900 dark:text-amber-400 font-semibold border-l-4 border-amber-700' : 'hover:bg-black/5 dark:hover:bg-white/5'}`}
                       >
                           {item.label}
                       </button>
@@ -802,7 +850,7 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
             columnGap: '40px',
             columnFill: 'auto',
             height: '100%',
-            padding: '60px 20px', // Top/Bottom padding for bars
+            padding: marginSize === 'narrow' ? '60px 16px' : marginSize === 'wide' ? '80px 48px' : '70px 24px', // Cozy margins
         }}
         onClick={() => { setShowControls(!showControls); setShowSettings(false); }}
         onTouchStart={onTouchStart}
@@ -811,7 +859,9 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
         onScroll={handleScroll}
       >
         <div 
-          className="h-full font-serif transition-all duration-200 selection:bg-cyan-200 dark:selection:bg-cyan-900"
+          className={`h-full transition-all duration-200 selection:bg-amber-200 dark:selection:bg-amber-900/40 ${
+            fontFamily === 'sans' ? 'font-sans' : fontFamily === 'dyslexic' ? 'font-dyslexic' : 'font-serif'
+          }`}
           style={{ 
               fontSize: `${fontSize}px`, 
               lineHeight: lineHeight,
@@ -863,13 +913,13 @@ const BookReader: React.FC<BookReaderProps> = ({ book, onBack, onUpdateBook, t }
                             }
                         }
                     }}
-                    className="w-10 text-center bg-transparent border-b border-slate-400 dark:border-slate-600 focus:border-cyan-500 focus:outline-none p-0 mx-1"
+                    className="w-10 text-center bg-transparent border-b border-slate-400 dark:border-slate-600 focus:border-amber-700 focus:outline-none p-0 mx-1"
                 />
                 <span>of {totalPages || 1}</span>
             </div>
             <div className="w-full max-w-xs h-1 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
                 <div 
-                    className="h-full bg-cyan-500 transition-all duration-300" 
+                    className="h-full bg-amber-700 dark:bg-amber-600 transition-all duration-300" 
                     style={{ width: `${Math.min(100, (currentPage / (totalPages || 1)) * 100)}%` }} 
                 />
             </div>

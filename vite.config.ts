@@ -8,18 +8,18 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifestFilename: 'manifest.json',
-      includeAssets: ['penguin-reader-logo.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
+      includeAssets: ['penguin-logo.svg', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png'],
       manifest: {
         name: "Penko Reader",
         short_name: "Reader",
         description: "An accessibility-focused offline reading tool designed to help users focus, read faster, and improve comprehension.",
         start_url: "./",
         display: "standalone",
-        background_color: "#f8fafc",
-        theme_color: "#2563EB",
+        background_color: "#fbf9f1",
+        theme_color: "#b45309",
         icons: [
           {
-            src: "./penguin-reader-logo.svg",
+            src: "./penguin-logo.svg",
             sizes: "any",
             type: "image/svg+xml",
             purpose: "any maskable"

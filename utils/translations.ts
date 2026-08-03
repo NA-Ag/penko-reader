@@ -73,7 +73,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Save your books, progress, and highlights to a file. You can restore this backup on any device.",
     backupExportBtn: "Download Backup",
     backupRestoreBtn: "Restore Backup",
-    backupRestoreHelper: "Have a backup file? Click below to restore it."
+    backupRestoreHelper: "Have a backup file? Click below to restore it.",
+    welcomeTitle: "Welcome to Penko's Sanctuary",
+    cozyReadingCorner: "Your Cozy Reading Corner",
+    cozyReadingDesc: "Grab a warm drink, settle into a comfortable chair, and lose yourself in your favorite stories. Penko is here to help you read at your own peaceful pace.",
+    enterLibrary: "Enter Library",
+    enterLibraryDesc: "Open your collection of EPUBs, PDFs, and TXT files",
+    speedTraining: "Speed Training",
+    speedTrainingDesc: "Practice focus-reading pasting quick text clips",
+    brandTitle: "Penko's Cozy Reader"
   },
   es: {
     title: "Lectura Rápida",
@@ -147,7 +155,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Guarda tus libros y progreso en un archivo. Puedes restaurarlo en cualquier dispositivo.",
     backupExportBtn: "Descargar Copia",
     backupRestoreBtn: "Restaurar Copia",
-    backupRestoreHelper: "¿Tienes un archivo de respaldo? Restáuralo aquí."
+    backupRestoreHelper: "¿Tienes un archivo de respaldo? Restáuralo aquí.",
+    welcomeTitle: "Bienvenido al Santuario de Penko",
+    cozyReadingCorner: "Tu rincón de lectura acogedor",
+    cozyReadingDesc: "Toma una bebida caliente, acomódate en una silla confortable y piérdete en tus historias favoritas. Penko está aquí para ayudarte a leer a tu propio ritmo pacífico.",
+    enterLibrary: "Entrar a la biblioteca",
+    enterLibraryDesc: "Abre tu colección de archivos EPUB, PDF y TXT",
+    speedTraining: "Entrenamiento de velocidad",
+    speedTrainingDesc: "Practica la lectura concentrada pegando fragmentos rápidos de texto",
+    brandTitle: "Lector Acogedor de Penko"
   },
   fr: {
     title: "Lecture Rapide",
@@ -221,7 +237,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Enregistrez vos livres et votre progression dans un fichier.",
     backupExportBtn: "Télécharger",
     backupRestoreBtn: "Restaurer",
-    backupRestoreHelper: "Avez-vous un fichier de sauvegarde ?"
+    backupRestoreHelper: "Avez-vous un fichier de sauvegarde ?",
+    welcomeTitle: "Bienvenue au Sanctuaire de Penko",
+    cozyReadingCorner: "Votre coin lecture douillet",
+    cozyReadingDesc: "Prenez une boisson chaude, installez-vous dans un fauteuil confortable et évadez-vous dans vos histoires préférées. Penko est là pour vous aider à lire à votre rythme.",
+    enterLibrary: "Entrer dans la bibliothèque",
+    enterLibraryDesc: "Ouvrez votre collection de fichiers EPUB, PDF et TXT",
+    speedTraining: "Entraînement à la vitesse",
+    speedTrainingDesc: "Entraînez-vous à la lecture rapide en collant des textes",
+    brandTitle: "Lecteur Douillet de Penko"
   },
   de: {
     title: "Schnelles Lesen",
@@ -295,7 +319,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Speichern Sie Ihre Bücher und Fortschritte in einer Datei.",
     backupExportBtn: "Sicherung herunterladen",
     backupRestoreBtn: "Sicherung wiederherstellen",
-    backupRestoreHelper: "Haben Sie eine Sicherungsdatei?"
+    backupRestoreHelper: "Haben Sie eine Sicherungsdatei?",
+    welcomeTitle: "Willkommen in Penkos Zuflucht",
+    cozyReadingCorner: "Ihre gemütliche Leseecke",
+    cozyReadingDesc: "Schnappen Sie sich ein warmes Getränk, machen Sie es sich in einem bequemen Sessel gemütlich und verlieren Sie sich in Ihren Lieblingsgeschichten.",
+    enterLibrary: "Bibliothek betreten",
+    enterLibraryDesc: "Öffnen Sie Ihre Sammlung von EPUB-, PDF- und TXT-Dateien",
+    speedTraining: "Schnelllesetraining",
+    speedTrainingDesc: "Üben Sie fokussiertes Lesen durch Einfügen von Textclips",
+    brandTitle: "Penkos gemütlicher Reader"
   },
   ja: {
     title: "速読",
@@ -369,7 +401,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "本と進捗状況をファイルに保存します。どのデバイスでも復元できます。",
     backupExportBtn: "バックアップをダウンロード",
     backupRestoreBtn: "バックアップを復元",
-    backupRestoreHelper: "バックアップファイルをお持ちですか？"
+    backupRestoreHelper: "バックアップファイルをお持ちですか？",
+    welcomeTitle: "ペンコの聖域へようこそ",
+    cozyReadingCorner: "居心地の良い読書コーナー",
+    cozyReadingDesc: "温かい飲み物を手に取り、快適な椅子に座って、お気に入りの物語に没頭してください。",
+    enterLibrary: "ライブラリに入る",
+    enterLibraryDesc: "EPUB、PDF、TXTファイルのコレクションを開く",
+    speedTraining: "スピードトレーニング",
+    speedTrainingDesc: "テキストクリップを貼り付けて速読を練習する",
+    brandTitle: "ペンコの快適リーダー"
   },
   ru: {
     title: "Скорочтение",
@@ -443,7 +483,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Сохраните книги и прогресс в файл. Вы можете восстановить его на любом устройстве.",
     backupExportBtn: "Скачать резервную копию",
     backupRestoreBtn: "Восстановить",
-    backupRestoreHelper: "Есть файл резервной копии?"
+    backupRestoreHelper: "Есть файл резервной копии?",
+    welcomeTitle: "Добро пожаловать в Святилище Пенко",
+    cozyReadingCorner: "Ваш уютный уголок для чтения",
+    cozyReadingDesc: "Возьмите теплый напиток, устройтесь в удобном кресле и погрузитесь в любимые истории.",
+    enterLibrary: "Войти в библиотеку",
+    enterLibraryDesc: "Открыть вашу коллекцию файлов EPUB, PDF и TXT",
+    speedTraining: "Скоростное обучение",
+    speedTrainingDesc: "Практикуйте чтение с фокусом, вставляя текстовые фрагменты",
+    brandTitle: "Уютный ридер Пенко"
   },
   uk: {
     title: "Швидкочитання",
@@ -517,7 +565,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Збережіть книги та прогрес у файл.",
     backupExportBtn: "Завантажити копію",
     backupRestoreBtn: "Відновити",
-    backupRestoreHelper: "Маєте файл резервної копії?"
+    backupRestoreHelper: "Маєте файл резервної копії?",
+    welcomeTitle: "Ласкаво просимо до Святилища Пенко",
+    cozyReadingCorner: "Ваш затишний куточок для читання",
+    cozyReadingDesc: "Візьміть теплий напій, влаштуйтеся в зручному кріслі та пориньте в улюблені історії.",
+    enterLibrary: "Увійти до бібліотеки",
+    enterLibraryDesc: "Відкрити вашу колекцію файлів EPUB, PDF та TXT",
+    speedTraining: "Швидкісне тренування",
+    speedTrainingDesc: "Практикуйте швидке читання, вставляючи фрагменти тексту",
+    brandTitle: "Затишний рідер Пенко"
   },
   it: {
     title: "Lettura Veloce",
@@ -591,7 +647,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Salva i tuoi libri e progressi in un file.",
     backupExportBtn: "Scarica backup",
     backupRestoreBtn: "Ripristina backup",
-    backupRestoreHelper: "Hai un file di backup?"
+    backupRestoreHelper: "Hai un file di backup?",
+    welcomeTitle: "Benvenuto nel Santuario di Penko",
+    cozyReadingCorner: "Il tuo angolo di lettura accogliente",
+    cozyReadingDesc: "Prendi una bevanda calda, mettiti comodo su una sedia accogliente e perditi nelle tue storie preferite.",
+    enterLibrary: "Entra in Biblioteca",
+    enterLibraryDesc: "Apri la tua collezione di file EPUB, PDF e TXT",
+    speedTraining: "Allenamento veloce",
+    speedTrainingDesc: "Esercitati nella lettura veloce incollando clip di testo",
+    brandTitle: "Lettore Accogliente di Penko"
   },
   pt: {
     title: "Leitura Rápida",
@@ -665,7 +729,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "Salve seus livros e progresso em um arquivo.",
     backupExportBtn: "Baixar Backup",
     backupRestoreBtn: "Restaurar Backup",
-    backupRestoreHelper: "Tem um arquivo de backup?"
+    backupRestoreHelper: "Tem um arquivo de backup?",
+    welcomeTitle: "Bem-vindo ao Santuário da Penko",
+    cozyReadingCorner: "Seu cantinho de leitura aconchegante",
+    cozyReadingDesc: "Pegue uma bebida quente, acomode-se em uma cadeira confortável e perca-se nas suas histórias favoritas.",
+    enterLibrary: "Entrar na Biblioteca",
+    enterLibraryDesc: "Abra sua coleção de arquivos EPUB, PDF e TXT",
+    speedTraining: "Treino de Velocidade",
+    speedTrainingDesc: "Pratique leitura rápida colando trechos de texto",
+    brandTitle: "Leitor Aconchegante da Penko"
   },
   zh: {
     title: "快速阅读",
@@ -739,7 +811,15 @@ export const TRANSLATIONS: Record<LanguageCode, Translation> = {
     backupModalDesc: "将您的书籍和进度保存到文件中。",
     backupExportBtn: "下载备份",
     backupRestoreBtn: "恢复备份",
-    backupRestoreHelper: "有备份文件吗？"
+    backupRestoreHelper: "有备份文件吗？",
+    welcomeTitle: "欢迎来到 Penko 的庇护所",
+    cozyReadingCorner: "您温馨的阅读角落",
+    cozyReadingDesc: "端上一杯温热的饮料，在舒适的椅子上坐下来，让自己沉浸在喜爱的故事中。",
+    enterLibrary: "进入图书馆",
+    enterLibraryDesc: "打开您的 EPUB、PDF 和 TXT 文件收藏",
+    speedTraining: "快速阅读训练",
+    speedTrainingDesc: "通过粘贴快速文本剪辑来练习专注阅读",
+    brandTitle: "Penko 温馨阅读器"
   }
 };
 

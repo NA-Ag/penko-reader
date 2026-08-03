@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Translation } from '../types';
+import { PenkoMascot } from './PenkoMascot';
 
 interface InstallModalProps {
   isOpen: boolean;
@@ -80,7 +81,9 @@ export const InstallModal: React.FC<InstallModalProps> = ({ isOpen, onClose, t }
           ×
         </button>
 
-        <img src="penguin-reader-logo.svg" alt="Penko Reader" style={{ width: '64px', height: '64px', marginBottom: '1rem' }} />
+        <div style={{ marginBottom: '1rem' }} className="p-1 bg-slate-950/20 dark:bg-slate-950/60 rounded-xl border border-purple-500/10 shadow-sm inline-block">
+          <PenkoMascot size={64} pose="talk" themeColor="violet" showBook={true} />
+        </div>
 
         <h2 style={{ marginTop: 0, marginBottom: '1rem', fontSize: '1.5rem' }}>
           {t.installModalTitle || t.installPwa}

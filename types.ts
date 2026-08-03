@@ -98,6 +98,14 @@ export interface Translation {
   backupExportBtn: string;
   backupRestoreBtn: string;
   backupRestoreHelper: string;
+  welcomeTitle: string;
+  cozyReadingCorner: string;
+  cozyReadingDesc: string;
+  enterLibrary: string;
+  enterLibraryDesc: string;
+  speedTraining: string;
+  speedTrainingDesc: string;
+  brandTitle: string;
 }
 
 export interface Chapter {
@@ -116,7 +124,7 @@ export interface StoredBook {
   title: string;
   author?: string;
   content: string;
-  fileType: 'txt' | 'pdf' | 'epub';
+  fileType: 'txt' | 'pdf' | 'epub' | 'mobi';
   progress: number;
   totalTokens: number;
   lastRead: number;
