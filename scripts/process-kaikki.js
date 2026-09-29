@@ -4,9 +4,9 @@ import readline from 'node:readline';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SRC_FILE = path.join(__dirname, '../kaikki.org-dictionary-English-words.jsonl');
-const OUT_FILE = path.join(__dirname, '../public/dicts/en.bin');
-const OUT_DIR = path.join(__dirname, '../public/dicts');
+const SRC_FILE = path.join(__dirname, '..', 'kaikki.org-dictionary-English-words.jsonl');
+const OUT_FILE = path.join(__dirname, '..', 'public', 'dicts', 'en.bin');
+const OUT_DIR = path.join(__dirname, '..', 'public', 'dicts');
 
 if (!fs.existsSync(OUT_DIR)) {
   fs.mkdirSync(OUT_DIR, { recursive: true });

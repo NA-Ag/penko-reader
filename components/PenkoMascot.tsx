@@ -1,149 +1,132 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React from 'react';
 import { PENKO_ANIMATIONS } from '../penko_anim';
 
+type MascotTheme = 'cozy' | 'cyan' | 'violet';
+type Pose = 'idle' | 'talk' | 'hurt' | 'jump' | 'walk' | 'walk_right' | 'jump_right';
+
 interface PenkoMascotProps {
-  pose?: 'idle' | 'talk' | 'hurt' | 'jump' | 'walk' | 'walk_right' | 'jump_right';
+  pose?: Pose;
   size?: number;
   className?: string;
-  themeColor?: 'cyan' | 'violet';
+  /** 'cozy' is the default palette used across the app. */
+  themeColor?: MascotTheme;
   showBook?: boolean;
 }
 
-const COLORS_CYAN = {
-  0: 'transparent',
-  1: '#1e293b',  // Slate-800
-  2: '#ffffff',  // White
-  3: '#38bdf8',  // Sky-400
-  4: '#fb923c',  // Orange-400
-  5: '#f43f5e',
-  6: '#fbbf24',
-  7: '#60a5fa',
-  8: '#34d399',
-  9: '#c084fc',
-  10: '#f472b6',
-  11: '#a16207',
-  12: '#22d3ee',
-  13: '#94a3b8',
+type Palette = Record<number, string>;
+
+const COLORS_CYAN: Palette = {
+  1: '#1e293b', 2: '#ffffff', 3: '#38bdf8', 4: '#fb923c', 5: '#f43f5e', 6: '#fbbf24',
+  7: '#60a5fa', 8: '#34d399', 9: '#c084fc', 10: '#f472b6', 11: '#a16207', 12: '#22d3ee', 13: '#94a3b8',
 };
 
-const COLORS_VIOLET = {
-  0: 'transparent',
-  1: '#0f172a',  // Slate-900 (Outline)
-  2: '#ffffff',  // White (Belly / Eyes)
-  3: '#818cf8',  // Indigo-400 (Body - Reader Purple theme)
-  4: '#fb923c',  // Orange-400 (Beak / Feet)
-  5: '#f43f5e',  // Rose-500
-  6: '#fbbf24',  // Amber-400
-  7: '#c084fc',  // Purple-400
-  8: '#34d399',  // Emerald-400
-  9: '#a78bfa',  // Violet-400
-  10: '#f472b6', // Pink-400
-  11: '#a16207', // Brown
-  12: '#a78bfa', // Purple highlight
-  13: '#94a3b8', // Gray
+const COLORS_VIOLET: Palette = {
+  1: '#0f172a', 2: '#ffffff', 3: '#818cf8', 4: '#fb923c', 5: '#f43f5e', 6: '#fbbf24',
+  7: '#c084fc', 8: '#34d399', 9: '#a78bfa', 10: '#f472b6', 11: '#a16207', 12: '#a78bfa', 13: '#94a3b8',
 };
 
-// Open Book geometry helper
-const getBookColor = (x: number, y: number, themeColor: 'cyan' | 'violet'): string | null => {
-  const primaryCover = themeColor === 'violet' ? '#06b6d4' : '#7c3aed';
-  const darkCover = themeColor === 'violet' ? '#0891b2' : '#581c87';
-  const pageBg = '#ffffff';
-  const textLine = '#94a3b8';
+// Slate-blue penguin with an orange beak and feet.
+const COLORS_COZY: Palette = {
+  1: '#2b1e17', 2: '#fffdf9', 3: '#3f4f63', 4: '#d97706', 5: '#f43f5e', 6: '#fbbf24',
+  7: '#b45309', 8: '#34d399', 9: '#c084fc', 10: '#f472b6', 11: '#7a4e2e', 12: '#f59e0b', 13: '#a8998a',
+};
 
-  // 1. Cover outlines (wrapping the pages)
-  // Left cover edge
-  if (x === 2 && y >= 9 && y <= 11) return primaryCover;
-  // Right cover edge
-  if (x === 12 && y >= 9 && y <= 11) return primaryCover;
-  // Bottom cover edge
-  if (x >= 2 && x <= 12 && y === 12) {
-    if (x === 7) return darkCover; // Spine bottom
-    return primaryCover;
-  }
-  
-  // 2. Spine column
-  if (x === 7 && y >= 9 && y <= 11) return darkCover;
+const PALETTES: Record<MascotTheme, Palette> = { cozy: COLORS_COZY, cyan: COLORS_CYAN, violet: COLORS_VIOLET };
 
-  // 3. Pages
-  // Left page flap
-  if (x >= 3 && x <= 6 && y >= 9 && y <= 11) {
-    // Text lines in the middle
-    if (y === 10 && x >= 4 && x <= 5) return textLine;
-    return pageBg;
-  }
-  // Right page flap
-  if (x >= 8 && x <= 11 && y >= 9 && y <= 11) {
-    // Text lines in the middle
-    if (y === 10 && x >= 9 && x <= 10) return textLine;
-    return pageBg;
-  }
+/** Colour of the open book Penko holds at (x, y), or null when the book doesn't cover that pixel. */
+const bookColor = (x: number, y: number, theme: MascotTheme): string | null => {
+  const cover = theme === 'cozy' ? '#b45309' : theme === 'violet' ? '#06b6d4' : '#7c3aed';
+  const spine = theme === 'cozy' ? '#7a4e2e' : theme === 'violet' ? '#0891b2' : '#581c87';
+  const page = theme === 'cozy' ? '#fffdf9' : '#ffffff';
+  const line = theme === 'cozy' ? '#c4a484' : '#94a3b8';
 
+  if ((x === 2 || x === 12) && y >= 9 && y <= 11) return cover;
+  if (y === 12 && x >= 2 && x <= 12) return x === 7 ? spine : cover;
+  if (x === 7 && y >= 9 && y <= 11) return spine;
+  if (x >= 3 && x <= 6 && y >= 9 && y <= 11) return y === 10 && x >= 4 && x <= 5 ? line : page;
+  if (x >= 8 && x <= 11 && y >= 9 && y <= 11) return y === 10 && x >= 9 && x <= 10 ? line : page;
   return null;
 };
 
-export const PenkoMascot: React.FC<PenkoMascotProps> = React.memo(({ pose = 'idle', size = 64, className = '', themeColor = 'violet', showBook = true }) => {
-  const pixelSize = size / 16;
-  const [frameIndex, setFrameIndex] = useState(0);
+interface Run { x: number; y: number; w: number; fill: string }
 
-  const activePose = pose in PENKO_ANIMATIONS ? pose : 'idle';
-  const frames = PENKO_ANIMATIONS[activePose];
-  const palette = themeColor === 'violet' ? COLORS_VIOLET : COLORS_CYAN;
+interface Sprite {
+  /** data: URL of an SVG with every frame laid side by side (16px apart). */
+  url: string;
+  frames: number;
+}
 
-  // Cycle animation frames
-  useEffect(() => {
-    setFrameIndex(0);
-    if (!frames || frames.length <= 1) return;
+/**
+ * Each (pose, palette, book) combination is rendered once into a horizontal sprite strip.
+ * The component is then a single element whose CSS animation steps through the strip:
+ * no timers, no React re-renders, no DOM mutations while Penko moves.
+ */
+const SPRITE_CACHE = new Map<string, Sprite>();
 
-    const fps = activePose === 'talk' ? 250 : activePose === 'hurt' ? 200 : 350;
-    const interval = setInterval(() => {
-      setFrameIndex(prev => (prev + 1) % frames.length);
-    }, fps);
+const toRuns = (matrix: number[][], palette: Palette, theme: MascotTheme, showBook: boolean, offsetX: number): Run[] => {
+  const runs: Run[] = [];
+  matrix.forEach((row, y) => {
+    let current: Run | null = null;
+    row.forEach((cell, x) => {
+      const fill = (showBook && bookColor(x, y, theme)) || palette[cell] || null;
+      if (current && fill === current.fill && current.x + current.w === x + offsetX) {
+        current.w++;
+        return;
+      }
+      if (current) runs.push(current);
+      current = fill ? { x: x + offsetX, y, w: 1, fill } : null;
+    });
+    if (current) runs.push(current);
+  });
+  return runs;
+};
 
-    return () => clearInterval(interval);
-  }, [frames, activePose]);
+const getSprite = (pose: Pose, theme: MascotTheme, showBook: boolean): Sprite => {
+  const key = `${pose}|${theme}|${showBook ? 1 : 0}`;
+  const cached = SPRITE_CACHE.get(key);
+  if (cached) return cached;
 
-  const matrix = useMemo(() => {
-    const currentFrame = frames[frameIndex] || frames[0];
-    return currentFrame;
-  }, [frames, frameIndex]);
+  const palette = PALETTES[theme];
+  const source = (PENKO_ANIMATIONS as Record<string, number[][][]>)[pose] || PENKO_ANIMATIONS.idle;
+  const rects = source
+    .flatMap((matrix, i) => toRuns(matrix, palette, theme, showBook, i * 16))
+    .map(r => `<rect x="${r.x}" y="${r.y}" width="${r.w}" height="1" fill="${r.fill}"/>`)
+    .join('');
+  const width = source.length * 16;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 16" width="${width}" height="16" shape-rendering="crispEdges">${rects}</svg>`;
+  const sprite = { url: `url("data:image/svg+xml,${encodeURIComponent(svg)}")`, frames: source.length };
+  SPRITE_CACHE.set(key, sprite);
+  return sprite;
+};
+
+const FRAME_MS: Partial<Record<Pose, number>> = { talk: 250, hurt: 200 };
+
+/**
+ * Penko, drawn as crisp pixel art. The animation is pure CSS (see `.penko-sprite` in
+ * index.css), so browsers pause it in background tabs and it honours reduced motion.
+ */
+export const PenkoMascot: React.FC<PenkoMascotProps> = React.memo(({ pose = 'idle', size = 64, className = '', themeColor = 'cozy', showBook = true }: PenkoMascotProps) => {
+  const safePose: Pose = pose in PENKO_ANIMATIONS ? pose : 'idle';
+  const sprite = getSprite(safePose, themeColor, showBook);
+  const style = {
+    width: size,
+    height: size,
+    backgroundImage: sprite.url,
+    backgroundSize: `${size * sprite.frames}px ${size}px`,
+    ['--pk-sprite-w' as string]: `${size * sprite.frames}px`,
+    ['--pk-sprite-steps' as string]: sprite.frames,
+    ['--pk-sprite-ms' as string]: `${(FRAME_MS[safePose] ?? 350) * sprite.frames}ms`
+  } as React.CSSProperties;
 
   return (
-    <div
-      className={`select-none pointer-events-none will-change-transform ${className}`}
-      style={{
-        width: size,
-        height: size,
-        display: 'grid',
-        gridTemplateColumns: `repeat(16, ${pixelSize}px)`,
-        gridTemplateRows: `repeat(16, ${pixelSize}px)`,
-        imageRendering: 'pixelated',
-      }}
-    >
-      {matrix.map((row: number[], y: number) =>
-        row.map((cell: number, x: number) => {
-          let color = palette[cell as keyof typeof palette] || 'transparent';
-          
-          // Apply dynamic open book overlay on top of the mascot
-          if (showBook) {
-            const activeTheme: 'cyan' | 'violet' = themeColor === 'cyan' ? 'cyan' : 'violet';
-            const bookColor = getBookColor(x, y, activeTheme);
-            if (bookColor) color = bookColor;
-          }
-
-          return (
-            <div
-              key={`${x}-${y}`}
-              style={{
-                backgroundColor: color,
-                width: pixelSize,
-                height: pixelSize,
-              }}
-            />
-          );
-        })
-      )}
-    </div>
+    <span
+      className={`penko-sprite block shrink-0 select-none pointer-events-none ${sprite.frames > 1 ? 'penko-sprite-animated' : ''} ${className}`}
+      style={style}
+      aria-hidden="true"
+    />
   );
 });
+
+PenkoMascot.displayName = 'PenkoMascot';
 
 export default PenkoMascot;

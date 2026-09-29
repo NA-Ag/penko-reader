@@ -2,30 +2,36 @@
   "name": "penko-reader",
   "private": true,
   "repository": "github:NA-Ag/penko-reader",
-  "description": "An accessibility-focused offline reading tool.",
+  "description": "Penko Reader: an offline-first, privacy-respecting reading app with a cozy book reader, RSVP speed reader, training drills, and dictionary.",
   "author": "Penko Software <support@penkosoftware.org>",
-  "version": "2.0.13",
+  "version": "3.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "generate-icons": "node generate-icons.js"
+    "typecheck": "tsc --noEmit",
+    "generate-icons": "node scripts/generate-icons.js",
+    "generate-dictionaries": "node scripts/generate-dictionaries.js"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/lora": "^5.3.0",
+    "@fontsource/opendyslexic": "^5.3.0",
     "jszip": "^3.10.1",
     "pdfjs-dist": "4.0.379",
     "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "sharp": "^0.34.5"
+    "react-dom": "^19.2.3"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^4.2.1",
-    "concurrently": "^9.2.1",
+    "autoprefixer": "^10.6.1",
+    "postcss": "^8.5.28",
+    "sharp": "^0.35.5",
+    "tailwindcss": "^3.4.19",
     "typescript": "~5.8.2",
     "vite": "^5.2.0",
-    "vite-plugin-pwa": "^0.17.4",
-    "wait-on": "^9.0.3"
+    "vite-plugin-pwa": "^0.17.4"
   }
 }

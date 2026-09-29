@@ -1,0 +1,329 @@
+/* Bundled fonts (offline-first: nothing is fetched from a CDN at runtime) */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/lora/400.css';
+@import '@fontsource/lora/400-italic.css';
+@import '@fontsource/lora/600.css';
+@import '@fontsource/lora/700.css';
+@import '@fontsource/opendyslexic/400.css';
+@import '@fontsource/opendyslexic/700.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ tokens */
+@layer base {
+  :root {
+    /* Paper & ink */
+    --canvas: 250 249 246;
+    --surface: 255 255 255;
+    --sunken: 243 241 236;
+    --line: 229 225 218;
+    --ink: 28 27 25;
+    --ink-soft: 82 78 72;
+    --muted: 117 112 105;
+    /* Penko's beak */
+    --accent: 194 87 26;
+    --accent-soft: 252 238 228;
+    --accent-ink: 168 72 18;
+    --on-accent: 255 255 255;
+    --penko: 63 79 99;
+    color-scheme: light;
+  }
+  .dark {
+    --canvas: 20 20 19;
+    --surface: 29 28 27;
+    --sunken: 38 37 35;
+    --line: 49 47 44;
+    --ink: 238 235 229;
+    --ink-soft: 199 194 186;
+    --muted: 150 145 137;
+    --accent: 240 140 70;
+    --accent-soft: 61 40 27;
+    --accent-ink: 245 160 100;
+    --on-accent: 24 20 17;
+    --penko: 150 170 196;
+    color-scheme: dark;
+  }
+  .oled {
+    --canvas: 0 0 0;
+    --surface: 13 13 13;
+    --sunken: 22 22 22;
+    --line: 36 36 36;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply font-sans bg-canvas text-ink antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  ::selection {
+    background: rgb(var(--accent) / 0.22);
+  }
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 2px;
+  }
+  button:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* -------------------------------------------------------------- components */
+@layer components {
+  /* Surfaces */
+  .card {
+    @apply bg-surface border border-line rounded-xl shadow-card;
+  }
+  .well {
+    @apply bg-sunken rounded-xl;
+  }
+
+  /* Type */
+  .display {
+    @apply font-serif font-semibold tracking-tight text-ink;
+  }
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.08em] text-muted;
+  }
+  .label {
+    @apply text-sm font-medium text-ink;
+  }
+  .hint {
+    @apply text-xs text-muted leading-relaxed;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 h-10 px-4 rounded-lg text-sm font-medium whitespace-nowrap select-none transition-colors duration-150 disabled:opacity-40 disabled:pointer-events-none;
+  }
+  .btn-sm {
+    @apply h-8 px-3 text-[13px] rounded-md;
+  }
+  .btn-lg {
+    @apply h-12 px-6 text-base rounded-xl;
+  }
+  .btn-icon {
+    @apply w-10 px-0;
+  }
+  .btn-sm.btn-icon {
+    @apply w-8;
+  }
+  .btn-primary {
+    @apply bg-accent text-on-accent hover:bg-accent/90 active:bg-accent/80 shadow-sm;
+  }
+  .btn-secondary {
+    @apply bg-surface text-ink border border-line hover:bg-sunken active:bg-sunken;
+  }
+  .btn-ghost {
+    @apply text-ink-soft hover:bg-sunken hover:text-ink;
+  }
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-600/90 shadow-sm;
+  }
+  .btn-danger-ghost {
+    @apply text-red-600 hover:bg-red-600/10 dark:text-red-400;
+  }
+
+  /* Inputs */
+  .input {
+    @apply w-full h-10 px-3 rounded-lg bg-surface border border-line text-sm text-ink placeholder:text-muted transition-colors focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/20;
+  }
+  textarea.input {
+    @apply h-auto py-3 leading-relaxed;
+  }
+  select.input {
+    @apply pr-8 appearance-none bg-no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23777069'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E");
+    background-size: 1rem;
+    background-position: right 0.6rem center;
+  }
+
+  /* Chips & segmented controls */
+  .chip {
+    @apply inline-flex items-center gap-1.5 h-8 px-3 rounded-full border border-line bg-surface text-[13px] font-medium text-ink-soft hover:bg-sunken hover:text-ink transition-colors whitespace-nowrap;
+  }
+  .chip-active {
+    @apply bg-ink text-canvas border-ink hover:bg-ink hover:text-canvas;
+  }
+  .segmented {
+    @apply inline-flex p-1 gap-1 rounded-lg bg-sunken;
+  }
+  .segmented > button {
+    @apply flex-1 inline-flex items-center justify-center gap-1.5 h-8 px-3 rounded-md text-[13px] font-medium text-muted hover:text-ink transition-colors whitespace-nowrap;
+  }
+  .segmented > button[aria-pressed='true'],
+  .segmented > button[aria-selected='true'] {
+    @apply bg-surface text-ink shadow-sm;
+  }
+
+  /* Progress bar */
+  .progress {
+    @apply h-1 w-full rounded-full bg-sunken overflow-hidden;
+  }
+  .progress > span {
+    @apply block h-full rounded-full bg-accent transition-[width] duration-300;
+  }
+
+  /* Range slider */
+  input[type='range'].range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    height: 20px;
+    width: 100%;
+    cursor: pointer;
+  }
+  input[type='range'].range:focus {
+    outline: none;
+  }
+  input[type='range'].range::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(to right, rgb(var(--accent)) var(--fill, 0%), rgb(var(--sunken)) var(--fill, 0%));
+  }
+  input[type='range'].range::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: rgb(var(--sunken));
+  }
+  input[type='range'].range::-moz-range-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: rgb(var(--accent));
+  }
+  input[type='range'].range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: rgb(var(--surface));
+    border: 2px solid rgb(var(--accent));
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+    transition: transform 0.1s ease;
+  }
+  input[type='range'].range::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: rgb(var(--surface));
+    border: 2px solid rgb(var(--accent));
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+  }
+  input[type='range'].range:hover::-webkit-slider-thumb,
+  input[type='range'].range:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.15);
+  }
+  input[type='range'].range:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 4px rgb(var(--accent) / 0.25);
+  }
+
+  /* Scrollbars */
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--line)) transparent;
+  }
+  .scroll-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background: rgb(var(--line));
+    border-radius: 4px;
+  }
+  .scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Typography for imported book HTML (Tailwind's reset strips these) */
+  .book-content h1, .book-content h2, .book-content h3, .book-content h4 {
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 1.4em 0 0.6em;
+    break-after: avoid;
+    text-align: left;
+  }
+  .book-content h1 { font-size: 1.6em; }
+  .book-content h2 { font-size: 1.35em; }
+  .book-content h3 { font-size: 1.15em; }
+  .book-content h4 { font-size: 1em; text-transform: uppercase; letter-spacing: 0.05em; }
+  .book-content p { margin: 0 0 0.9em; }
+  .book-content blockquote {
+    margin: 1em 1.5em;
+    padding-left: 1em;
+    border-left: 3px solid rgb(var(--accent) / 0.5);
+    font-style: italic;
+  }
+  .book-content ul, .book-content ol { margin: 0.8em 0 0.8em 1.5em; }
+  .book-content ul { list-style: disc; }
+  .book-content ol { list-style: decimal; }
+  .book-content li { margin-bottom: 0.3em; }
+  .book-content hr { border: 0; border-top: 1px solid currentColor; opacity: 0.25; margin: 1.5em auto; width: 40%; }
+  .book-content em, .book-content i { font-style: italic; }
+  .book-content strong, .book-content b { font-weight: 700; }
+  .book-content a { color: rgb(var(--accent)); text-decoration: underline; }
+  .book-content pre, .book-content code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; }
+  .book-content pre { white-space: pre-wrap; padding: 0.8em; border-radius: 0.5em; background: rgb(128 128 128 / 0.1); margin: 0 0 1em; }
+  .book-content table { border-collapse: collapse; margin: 1em 0; width: 100%; }
+  .book-content td, .book-content th { border: 1px solid rgb(128 128 128 / 0.3); padding: 0.3em 0.5em; vertical-align: top; }
+  .book-content img, .book-content svg { max-width: 100%; height: auto; display: block; margin: 1em auto; }
+  .book-content sup { font-size: 0.7em; vertical-align: super; }
+  .book-content sub { font-size: 0.7em; vertical-align: sub; }
+}
+
+/* --------------------------------------------------------------- utilities */
+@layer utilities {
+  .animate-in {
+    animation-name: enter;
+    animation-duration: 180ms;
+    animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation-fill-mode: both;
+  }
+  .fade-in { --pk-enter-opacity: 0; }
+  .zoom-in-95 { --pk-enter-scale: 0.96; }
+  .slide-in-from-top-2 { --pk-enter-y: -0.5rem; }
+  .slide-in-from-bottom-2 { --pk-enter-y: 0.5rem; }
+  .slide-in-from-bottom-4 { --pk-enter-y: 1rem; }
+  .slide-in-from-right-4 { --pk-enter-x: 1rem; }
+  .slide-in-from-left-4 { --pk-enter-x: -1rem; }
+  .animate-in.duration-150 { animation-duration: 150ms; }
+  .animate-in.duration-200 { animation-duration: 200ms; }
+  .animate-in.duration-300 { animation-duration: 300ms; }
+  .animate-in.duration-500 { animation-duration: 500ms; }
+
+  /* Penko sprite: one element, frames stepped by CSS (no JS timers). */
+  .penko-sprite {
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+  .penko-sprite-animated {
+    animation: penko-sprite var(--pk-sprite-ms, 700ms) steps(var(--pk-sprite-steps, 2)) infinite;
+  }
+  @keyframes penko-sprite {
+    to { background-position: calc(var(--pk-sprite-w) * -1) 0; }
+  }
+
+  .tabular { font-variant-numeric: tabular-nums; }
+  .writing-vertical-rl { writing-mode: vertical-rl; }
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-in, .animate-penko-bob, .penko-sprite-animated { animation: none; }
+  }
+}

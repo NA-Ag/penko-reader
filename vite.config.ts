@@ -12,11 +12,12 @@ export default defineConfig({
       manifest: {
         name: "Penko Reader",
         short_name: "Reader",
-        description: "An accessibility-focused offline reading tool designed to help users focus, read faster, and improve comprehension.",
+        description: "An offline-first, privacy-respecting reading app: cozy book reader, RSVP speed reader, training drills and dictionary.",
+        categories: ["books", "education", "productivity"],
         start_url: "./",
         display: "standalone",
-        background_color: "#fbf9f1",
-        theme_color: "#b45309",
+        background_color: "#FAF9F6",
+        theme_color: "#C2571A",
         icons: [
           {
             src: "./penguin-logo.svg",
@@ -39,33 +40,10 @@ export default defineConfig({
         ]
       },
       workbox: {
-        // This section configures the offline caching for CDNs
-        runtimeCaching: [
-          {
-            urlPattern: /^https:\/\/cdn\.tailwindcss\.com\//,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'tailwind-cdn',
-              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
-              cacheableResponse: { statuses: [0, 200] }
-            }
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com\//,
-            handler: 'StaleWhileRevalidate',
-            options: { cacheName: 'google-fonts-stylesheets' }
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.gstatic\.com\//,
-            handler: 'CacheFirst',
-            options: { cacheName: 'google-fonts-webfonts', cacheableResponse: { statuses: [0, 200] } }
-          },
-          {
-            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\//,
-            handler: 'CacheFirst',
-            options: { cacheName: 'jsdelivr-cdn', cacheableResponse: { statuses: [0, 200] } }
-          }
-        ]
+        // Everything the app needs is bundled; precache it all (fonts, pdf worker, dictionaries).
+        globPatterns: ['**/*.{js,mjs,css,html,svg,png,woff2,wasm,bin,json}'],
+        maximumFileSizeToCacheInBytes: 8 * 1024 * 1024,
+        navigateFallback: 'index.html'
       }
     })
   ],
@@ -75,7 +53,18 @@ export default defineConfig({
     }
   },
   build: {
-    target: 'esnext'
+    target: 'esnext',
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      output: {
+        // Only React is split by hand. pdf.js and JSZip must stay in their own lazy chunks:
+        // naming them here lets Rollup park shared helpers inside them, which drags them
+        // into the startup bundle.
+        manualChunks: {
+          react: ['react', 'react-dom']
+        }
+      }
+    }
   },
   base: './'
 });

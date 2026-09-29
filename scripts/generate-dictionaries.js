@@ -3,8 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SRC_DIR = path.join(__dirname, '../dictionaries');
-const OUT_DIR = path.join(__dirname, '../public/dicts');
+const SRC_DIR = path.join(__dirname, '..', 'dictionaries');
+const OUT_DIR = path.join(__dirname, '..', 'public', 'dicts');
 
 if (!fs.existsSync(OUT_DIR)) {
   fs.mkdirSync(OUT_DIR, { recursive: true });
